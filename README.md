@@ -1,73 +1,105 @@
 # PARAKH
 
 Anomaly flagging for MPLADS implementation records (SIH26102). A review queue,
-not a verdict — see [`/methodology`](http://localhost:3010/methodology) once
-running.
+not a verdict — 13 detectors across two confidence tiers surface works worth a
+second look, each flag carrying its own evidence and a benign explanation
+alongside it. Once running, `/methodology` explains every detector and
+`/validation` shows how they were tested.
 
-## One-time setup
+## Prerequisites
+
+- **Python 3.11+** (developed on 3.14)
+- **Node.js 20+**
+
+## Quick start
+
+The corpus is committed, so a fresh clone runs without any data build.
 
 ```bash
-# Python side (from the repo root)
+git clone https://github.com/Kartik-Garg-13/mplad_sih.git
+cd mplad_sih
+
+# Python side
 python -m venv .venv
-.venv/Scripts/activate        # .venv/bin/activate on macOS/Linux
+.venv/Scripts/activate          # .venv/bin/activate on macOS/Linux
 pip install -e ".[dev]"
 
 # Frontend
-cd web
-npm install
-cd ..
+npm install --prefix web
 ```
 
-Raw eSAKSHI exports go in `data/raw/esakshi_ls_18ls/` and
-`data/raw/esakshi_rs_18ls/` (see `src/parakh/config.py` for the exact
-filenames expected — no scraper, hand-downloaded from
-`mplads.mospi.gov.in`).
+Then start both servers — both are required.
 
-## Building the data
+```bash
+# Terminal 1 — API
+python -m uvicorn parakh.api.main:app --port 8020
 
-Every rebuild is deterministic and fast (a few seconds) — nothing in this
-app computes a detector live.
+# Terminal 2 — frontend
+npm --prefix web run dev -- --port 3010
+```
+
+Open **http://localhost:3010**.
+
+The frontend reads `NEXT_PUBLIC_API_URL` and falls back to
+`http://localhost:8020`, so no env file is needed for the default setup. To
+point it elsewhere, create `web/.env.local` (git-ignored) with
+`NEXT_PUBLIC_API_URL=<url>`.
+
+Add `--reload --reload-dir src` to the uvicorn command when working on the API.
+
+## Rebuilding the data
+
+Only needed after changing a detector, the parsing, or the raw exports —
+`data/processed/` is already committed. Every rebuild is deterministic and takes
+a few seconds; nothing in this app computes a detector live.
 
 ```bash
 python -m parakh.pipeline            # raw CSVs -> data/processed/*.parquet
 python -m parakh.database            # parquet + detectors -> parakh.duckdb
-python -m parakh.validation.build    # validation results -> same duckdb (optional, re-run anytime)
+python -m parakh.validation.build    # validation results -> same duckdb
 ```
 
-## Running it
+**Stop the API server first.** The rebuild swaps the DuckDB file atomically via
+`os.replace()`, which fails on Windows while another process holds it open.
 
-Two servers, both required:
-
-```bash
-# Terminal 1 — API (from repo root)
-uvicorn parakh.api.main:app --reload --reload-dir src --port 8020
-
-# Terminal 2 — frontend
-cd web
-npm run dev
-```
-
-Open **http://localhost:3010**. The frontend expects the API at
-`http://localhost:8020` (set in `web/.env.local` as `NEXT_PUBLIC_API_URL`).
-
-### Production-mode frontend
-
-```bash
-cd web
-npm run build   # type-checks + lints as part of the build; must be clean
-npm run start
-```
+Raw eSAKSHI exports live in `data/raw/esakshi_ls_18ls/` and
+`data/raw/esakshi_rs_18ls/` — hand-downloaded from `mplads.mospi.gov.in`, no
+scraper. `src/parakh/config.py` lists the exact filenames expected.
 
 ## Tests
 
 ```bash
-pytest                 # 123 tests, ~8s
-cd web && npm run lint # must be clean
+pytest                    # 147 tests, ~25s
+npm --prefix web run lint # must be clean
+npm --prefix web run build
+```
+
+Stop the API server before running `pytest` — some tests rebuild the database
+and hit the same Windows file lock described above. The frontend build
+type-checks as it goes and has caught errors that dev mode hid, so treat it as
+part of the test suite rather than a release step.
+
+`tests/test_vocabulary_lock.py` greps `web/src` for words that would turn a
+flag into an accusation. If it fails, rewrite the copy — never extend the
+allowlist.
+
+## Layout
+
+```
+src/parakh/          pipeline, detectors, validation, FastAPI app
+  detectors/         tier_a.py (A1-A5), tier_b.py (B1-B8)
+  validation/        five independent validation methods
+  api/main.py        read-only API over the DuckDB store
+web/src/app/         Next.js App Router pages
+data/raw/            eSAKSHI exports as downloaded
+data/processed/      built parquet + parakh.duckdb + overrides.sqlite
+docs/                presenter brief, demo script
+tests/               147 tests
 ```
 
 ## Reviewer overrides
 
-`data/processed/overrides.sqlite` is a separate store from `parakh.duckdb` —
-rebuilding the database never wipes a reviewer's "reviewed — explained"
-marks. Back it up separately if you want to preserve review state across a
-fresh data pull.
+`data/processed/overrides.sqlite` is deliberately a separate store from
+`parakh.duckdb`, so rebuilding the database never wipes a reviewer's
+"reviewed — explained" marks. It is the one file here that holds state the
+pipeline cannot regenerate — back it up separately before a fresh data pull.
