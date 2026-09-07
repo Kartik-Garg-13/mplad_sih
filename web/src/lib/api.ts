@@ -484,6 +484,22 @@ export function getRebuildJob(jobId: string) {
 
 export type CreateDatasetResult = { batch: DatasetSource & { row_counts: Record<string, number> }; job: RebuildJob };
 
+export type AssistantLink = { label: string; href: string };
+
+export type AssistantReply = {
+  question: string;
+  intent: string;
+  answer: string;
+  data: Record<string, unknown>;
+  links: AssistantLink[];
+  suggestions: string[];
+  declined: boolean;
+};
+
+export function askAssistant(q: string) {
+  return apiFetch<AssistantReply>(`/api/ask?q=${encodeURIComponent(q)}`);
+}
+
 async function parseApiError(res: Response): Promise<string> {
   try {
     const body = await res.json();

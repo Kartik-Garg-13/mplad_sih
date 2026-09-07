@@ -20,7 +20,7 @@ from fastapi import Body, FastAPI, File, Form, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
 
-from parakh import config, rebuild, uploads
+from parakh import assistant, config, rebuild, uploads
 from parakh import detectors as detector_registry
 from parakh.database import DB_PATH
 from parakh.detector_meta import DETECTORS
@@ -250,6 +250,25 @@ def search(q: str = Query(..., min_length=2)) -> dict:
         "n_agencies": n_agencies,
         "constituencies": constituencies,
         "n_constituencies": n_constituencies,
+    }
+
+
+@app.get("/api/ask")
+def ask_assistant(q: str = Query(..., min_length=1, max_length=300)) -> dict:
+    """Grounded question answering — see `parakh.assistant` for why there
+    is no model behind this. Read-only like everything else here: the
+    handler reads rows and returns them; it cannot write, and it cannot
+    answer anything outside its fixed intent set.
+    """
+    answer = assistant.ask(get_con(), q)
+    return {
+        "question": q,
+        "intent": answer.intent,
+        "answer": answer.text,
+        "data": answer.data,
+        "links": answer.links,
+        "suggestions": answer.suggestions,
+        "declined": answer.declined,
     }
 
 

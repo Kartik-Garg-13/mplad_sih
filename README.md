@@ -69,7 +69,7 @@ scraper. `src/parakh/config.py` lists the exact filenames expected.
 ## Tests
 
 ```bash
-pytest                    # 147 tests, ~25s
+pytest                    # 172 tests, ~23s
 npm --prefix web run lint # must be clean
 npm --prefix web run build
 ```
@@ -89,13 +89,29 @@ allowlist.
 src/parakh/          pipeline, detectors, validation, FastAPI app
   detectors/         tier_a.py (A1-A5), tier_b.py (B1-B8)
   validation/        five independent validation methods
+  assistant.py       grounded Q&A over the corpus — no model, fixed intents
   api/main.py        read-only API over the DuckDB store
 web/src/app/         Next.js App Router pages
 data/raw/            eSAKSHI exports as downloaded
 data/processed/      built parquet + parakh.duckdb + overrides.sqlite
 docs/                presenter brief, demo script
-tests/               147 tests
+tests/               172 tests
 ```
+
+## The assistant
+
+Every page carries an "Ask about this data" panel, served by `/api/ask`. There
+is no language model behind it: `src/parakh/assistant.py` matches a question
+against a fixed set of intents and builds the answer from rows it reads out of
+the corpus, so it runs offline and cannot invent a figure. A question outside
+that set is told what can be asked instead rather than answered.
+
+One intent exists only to refuse. Asked to rank members by flag count, it
+explains why that is the wrong question — flags belong to works, not people,
+and an MP with more sanctioned works collects more flags for that reason alone.
+`tests/test_assistant.py` holds that refusal in place across eight phrasings,
+and checks the generated answers against the same word list the vocabulary lock
+applies to files.
 
 ## Reviewer overrides
 

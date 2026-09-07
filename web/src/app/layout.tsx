@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import SiteHeader from "@/components/site/SiteHeader";
 import SiteFooter from "@/components/site/SiteFooter";
+import Assistant from "@/components/assistant/Assistant";
+import { getProvenance } from "@/lib/api";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,7 +27,14 @@ export const metadata: Metadata = {
   description: "Anomaly flagging for MPLADS implementation records (SIH26102)",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  let snapshotDate: string | null = null;
+  try {
+    snapshotDate = (await getProvenance()).snapshot_date;
+  } catch {
+    // The assistant still works without it; it only labels the answers.
+  }
+
   return (
     <html
       lang="en"
@@ -35,6 +44,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SiteHeader />
         <div className="flex-1">{children}</div>
         <SiteFooter />
+        <Assistant snapshotDate={snapshotDate} />
       </body>
     </html>
   );
