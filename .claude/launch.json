@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "parakh-api",
+      "runtimeExecutable": ".venv/Scripts/python.exe",
+      "runtimeArgs": ["-m", "uvicorn", "parakh.api.main:app", "--port", "8020"],
+      "port": 8020
+    },
+    {
+      "name": "parakh-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "web", "run", "dev", "--", "--port", "3010"],
+      "port": 3010
+    }
+  ]
+}

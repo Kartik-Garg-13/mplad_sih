@@ -1,0 +1,31 @@
+[project]
+name = "parakh"
+version = "0.1.0"
+description = "Anomaly flagging for MPLADS implementation records (SIH26102)"
+requires-python = ">=3.11"
+dependencies = [
+    "polars>=1.0",
+    "pyarrow>=16.0",
+    "duckdb>=1.0",
+    "scikit-learn>=1.4",
+    "numpy>=1.26",
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.29",
+    "python-multipart>=0.0.9",
+    "networkx>=3.2",
+    "lightgbm>=4.3",
+    "pandas>=2.2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   PARAKH design tokens.
+
+   Shared with the pitch deck and the demo video so the three artefacts read as
+   one project. Every pairing below was contrast-checked against WCAG AA before
+   it was adopted (see the plan's design-system section).
+
+   The one trap worth naming: amber #E3A008 is 7.39:1 on navy but only 2.26:1 on
+   white — it FAILS on light surfaces. Light surfaces use --accent-ink (#B45309,
+   5.02:1) instead. Never put --accent on a light background.
+--------------------------------------------------------------------------- */
+
+:root {
+  /* Surfaces */
+  --navy-deep: #121d38;
+  --navy: #1b2a4e;
+  --navy-panel: #24345e;
+  --surface: #ffffff;
+  --surface-sunken: #f8fafc;
+  --border: #e2e8f0;
+  --border-soft: #f1f5f9;
+
+  /* Accent — amber. --accent on dark only, --accent-ink on light. */
+  --accent: #e3a008;
+  --accent-ink: #b45309;
+  --accent-soft: #fffbeb;
+
+  /* Text on dark */
+  --on-navy: #ffffff;
+  --on-navy-2: #cadcfc;
+  --on-navy-muted: #9fb3d9;
+
+  /* Text on light */
+  --ink: #0f172a;
+  --ink-2: #1b2a4e;
+  --ink-muted: #475569;
+
+  /* Semantic tier colours — meaning-bearing, contrast-verified on Day 13.
+     Do not restyle these for decoration. */
+  --tier-a-bg: #fff1f2;
+  --tier-a-ink: #be123c;
+  --tier-b-bg: #fffbeb;
+  --tier-b-ink: #b45309;
+  --reviewed-bg: #dff0ea;
+  --reviewed-ink: #1e8e6b;
+
+  /* Motion */
+  --dur-fast: 180ms;
+  --dur: 420ms;
+  --dur-slow: 720ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --background: var(--surface-sunken);
+  --foreground: var(--ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-navy-deep: var(--navy-deep);
+  --color-navy: var(--navy);
+  --color-navy-panel: var(--navy-panel);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-navy: var(--on-navy);
+  --color-on-navy-2: var(--on-navy-2);
+  --color-on-navy-muted: var(--on-navy-muted);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-muted: var(--ink-muted);
+  --color-surface: var(--surface);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
+  --color-tier-a-bg: var(--tier-a-bg);
+  --color-tier-a-ink: var(--tier-a-ink);
+  --color-tier-b-bg: var(--tier-b-bg);
+  --color-tier-b-ink: var(--tier-b-ink);
+  --color-reviewed-bg: var(--reviewed-bg);
+  --color-reviewed-ink: var(--reviewed-ink);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-display);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* --- Motion primitives -----------------------------------------------------
+   Reveal state is driven by a data attribute set from IntersectionObserver, so
+   the resting (hidden) state lives in CSS and nothing depends on JS having run
+   before first paint.
+--------------------------------------------------------------------------- */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition:
+    opacity var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal="in"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Elements that only fade, no travel (large panels, images). */
+[data-reveal][data-reveal-mode="fade"] {
+  transform: none;
+}
+
+.hairline {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--accent) 55%, transparent),
+    transparent
+  );
+  height: 1px;
+}
+
+/* An overflow-x-auto row (the header nav) still needs to scroll at a
+   viewport narrow enough to clip it, but a bare native scrollbar sitting
+   under nav links reads as a layout bug, not a feature — hide the bar,
+   keep the scroll (trackpad/touch/drag still work). */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Respect the OS setting. This project holds a WCAG AA bar; motion is a
+   preference, not a decoration we get to override. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  [data-parallax] {
+    transform: none !important;
+  }
+}

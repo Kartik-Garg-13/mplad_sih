@@ -1,0 +1,1020 @@
+<title>PARAKH Presenter's Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600;700&display=swap">
+
+<style>
+:root {
+  --navy-deep: #121d38;
+  --navy: #1b2a4e;
+  --navy-panel: #24345e;
+  --accent: #b45309;
+  --accent-on-dark: #e3a008;
+  --accent-soft: #fdf6ec;
+  --ice: #cadcfc;
+  --ice-muted: #9fb3d9;
+
+  --ground: #f7f8fb;
+  --surface: #ffffff;
+  --sunken: #eef1f7;
+  --border: #dde3ee;
+  --border-soft: #e9edf5;
+  --ink: #131b2e;
+  --ink-2: #1b2a4e;
+  --ink-muted: #4a5771;
+  --ink-faint: #6b7897;
+
+  --tier-a: #be123c;
+  --tier-a-bg: #fff1f3;
+  --tier-b: #b45309;
+  --tier-b-bg: #fdf6ec;
+  --good: #1e7a5c;
+  --good-bg: #e6f4ef;
+
+  --measure: 68ch;
+  --rail: 244px;
+
+  --step--1: 0.813rem;
+  --step-0: 0.975rem;
+  --step-1: 1.14rem;
+  --step-2: 1.45rem;
+  --step-3: 1.95rem;
+  --step-4: 2.7rem;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0d1526;
+    --surface: #151f36;
+    --sunken: #1b2740;
+    --border: #2a3654;
+    --border-soft: #222d47;
+    --ink: #e8edf7;
+    --ink-2: #ffffff;
+    --ink-muted: #a8b6d1;
+    --ink-faint: #8494b3;
+    --accent: #e3a008;
+    --accent-soft: #2a2213;
+    --tier-a: #fb7185;
+    --tier-a-bg: #2e1620;
+    --tier-b: #e3a008;
+    --tier-b-bg: #2a2213;
+    --good: #5eccaa;
+    --good-bg: #12291f;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --ground: #0d1526;
+  --surface: #151f36;
+  --sunken: #1b2740;
+  --border: #2a3654;
+  --border-soft: #222d47;
+  --ink: #e8edf7;
+  --ink-2: #ffffff;
+  --ink-muted: #a8b6d1;
+  --ink-faint: #8494b3;
+  --accent: #e3a008;
+  --accent-soft: #2a2213;
+  --tier-a: #fb7185;
+  --tier-a-bg: #2e1620;
+  --tier-b: #e3a008;
+  --tier-b-bg: #2a2213;
+  --good: #5eccaa;
+  --good-bg: #12291f;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: var(--step-0);
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: "Fraunces", Georgia, "Times New Roman", serif;
+  color: var(--ink-2);
+  text-wrap: balance;
+  line-height: 1.16;
+  margin: 0;
+}
+
+p { margin: 0; }
+a { color: var(--accent); }
+
+code, .mono, .num {
+  font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- masthead ---------- */
+
+.masthead {
+  background: var(--navy-deep);
+  color: var(--ice);
+  padding: 3rem 1.5rem 2.75rem;
+  border-bottom: 3px solid var(--accent-on-dark);
+}
+.masthead-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.mark {
+  width: 30px; height: 30px;
+  border-radius: 999px;
+  background: var(--accent-on-dark);
+  color: var(--navy-deep);
+  display: grid; place-items: center;
+  font-size: 0.9rem;
+  flex: none;
+}
+.wordmark-text {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+.ps-code {
+  margin-left: auto;
+  font-size: var(--step--1);
+  color: var(--ice-muted);
+  letter-spacing: 0.04em;
+}
+.masthead h1 {
+  color: #fff;
+  font-size: var(--step-4);
+  font-weight: 600;
+  max-width: 20ch;
+}
+.masthead h1 em {
+  font-style: normal;
+  color: var(--accent-on-dark);
+}
+.masthead-sub {
+  color: var(--ice);
+  max-width: 62ch;
+  font-size: var(--step-1);
+}
+.masthead-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(202, 220, 252, 0.18);
+  font-size: var(--step--1);
+  color: var(--ice-muted);
+}
+.masthead-meta b { color: var(--ice); font-weight: 500; }
+
+/* ---------- shell ---------- */
+
+.shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 1.5rem 5rem;
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  gap: 3.25rem;
+  align-items: start;
+}
+
+.toc {
+  position: sticky;
+  top: 1.5rem;
+  padding-top: 2.75rem;
+  font-size: var(--step--1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.toc-label {
+  font-size: 0.69rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.7rem;
+  font-weight: 600;
+}
+.toc a {
+  color: var(--ink-muted);
+  text-decoration: none;
+  padding: 0.3rem 0 0.3rem 0.75rem;
+  border-left: 2px solid var(--border);
+  display: flex;
+  gap: 0.55rem;
+}
+.toc a:hover { color: var(--accent); border-left-color: var(--accent); }
+.toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.toc a .n { color: var(--ink-faint); font-size: 0.75rem; padding-top: 0.09rem; }
+
+main { padding-top: 2.75rem; min-width: 0; }
+
+section { scroll-margin-top: 1.5rem; }
+section + section { margin-top: 3.5rem; }
+
+.eyebrow {
+  font-size: 0.69rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.6rem;
+}
+h2 { font-size: var(--step-3); font-weight: 600; }
+h3 {
+  font-size: var(--step-1);
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.6rem;
+}
+.lede { color: var(--ink-muted); max-width: var(--measure); margin-top: 0.85rem; }
+.prose { max-width: var(--measure); display: flex; flex-direction: column; gap: 0.9rem; margin-top: 1.1rem; }
+.prose strong { color: var(--ink-2); font-weight: 600; }
+
+/* ---------- pull quote / say-this ---------- */
+
+.sayit {
+  margin-top: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  padding: 1.5rem 1.6rem;
+  border-radius: 3px;
+}
+.sayit-label {
+  font-size: 0.69rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 600;
+}
+.sayit p {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: var(--step-2);
+  line-height: 1.4;
+  color: var(--ink-2);
+  margin-top: 0.7rem;
+  max-width: 46ch;
+}
+
+/* ---------- stat strip ---------- */
+
+.stats {
+  margin-top: 1.6rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.stat { background: var(--surface); padding: 1.05rem 1.1rem; }
+.stat .v {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: var(--step-2);
+  font-weight: 600;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  display: block;
+}
+.stat .k {
+  font-size: 0.76rem;
+  color: var(--ink-faint);
+  margin-top: 0.15rem;
+  display: block;
+}
+
+/* ---------- tables ---------- */
+
+.tablewrap {
+  margin-top: 1.4rem;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+table { border-collapse: collapse; width: 100%; font-size: var(--step--1); min-width: 620px; }
+thead th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.69rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--sunken);
+  white-space: nowrap;
+}
+tbody td { padding: 0.72rem 0.9rem; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+tbody tr:last-child td { border-bottom: 0; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.code { font-family: "Geist Mono", monospace; font-weight: 500; color: var(--ink-2); }
+.dname { color: var(--ink-2); font-weight: 500; }
+
+.pill {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.1rem 0.42rem;
+  border-radius: 2px;
+  letter-spacing: 0.03em;
+}
+.pill-a { background: var(--tier-a-bg); color: var(--tier-a); }
+.pill-b { background: var(--tier-b-bg); color: var(--tier-b); }
+.zero { color: var(--ink-faint); }
+
+/* ---------- bar chart ---------- */
+
+.chart { margin-top: 1.4rem; display: flex; flex-direction: column; gap: 0.5rem; max-width: 640px; }
+.bar-row { display: grid; grid-template-columns: 2.2rem 1fr 3.6rem; align-items: center; gap: 0.7rem; font-size: var(--step--1); }
+.bar-code { font-family: "Geist Mono", monospace; color: var(--ink-muted); font-size: 0.78rem; }
+.bar-track { height: 9px; background: var(--sunken); border-radius: 1px; overflow: hidden; }
+.bar-fill { height: 100%; display: block; }
+.bar-val { text-align: right; font-variant-numeric: tabular-nums; color: var(--ink-muted); font-size: 0.78rem; }
+.chart-note { font-size: var(--step--1); color: var(--ink-faint); margin-top: 0.9rem; max-width: var(--measure); }
+
+/* ---------- validation blocks ---------- */
+
+.vblocks { margin-top: 1.4rem; display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.vblock { background: var(--surface); padding: 1.35rem 1.4rem; display: grid; grid-template-columns: 1fr auto; gap: 0.4rem 1.5rem; align-items: start; }
+.vblock h4 { font-family: "Geist", sans-serif; font-size: var(--step-0); font-weight: 600; color: var(--ink-2); }
+.vblock .verdict {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 0.16rem 0.5rem; border-radius: 2px; white-space: nowrap;
+}
+.v-good { background: var(--good-bg); color: var(--good); }
+.v-mixed { background: var(--tier-b-bg); color: var(--tier-b); }
+.v-weak { background: var(--tier-a-bg); color: var(--tier-a); }
+.vblock p { grid-column: 1 / -1; color: var(--ink-muted); font-size: var(--step--1); max-width: 72ch; }
+.vblock .figures { grid-column: 1 / -1; font-family: "Geist Mono", monospace; font-size: 0.78rem; color: var(--ink-2); background: var(--sunken); padding: 0.5rem 0.7rem; margin-top: 0.15rem; overflow-x: auto; white-space: nowrap; }
+
+/* ---------- restraint band ---------- */
+
+.band {
+  background: var(--navy-deep);
+  color: var(--ice);
+  margin-top: 3.5rem;
+  padding: 3rem 0;
+}
+.band-inner { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+.band .eyebrow { color: var(--accent-on-dark); }
+.band h2 { color: #fff; }
+.band .lede { color: var(--ice); }
+.rules { margin-top: 1.9rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 1px; background: rgba(202,220,252,0.16); border: 1px solid rgba(202,220,252,0.16); }
+.rule { background: var(--navy-deep); padding: 1.15rem 1.2rem; }
+.rule .rn { font-family: "Geist Mono", monospace; font-size: 0.72rem; color: var(--accent-on-dark); }
+.rule h4 { font-family: "Geist", sans-serif; font-size: var(--step-0); font-weight: 600; color: #fff; margin: 0.3rem 0 0.35rem; }
+.rule p { font-size: var(--step--1); color: var(--ice-muted); line-height: 1.55; }
+
+/* ---------- Q&A ---------- */
+
+.qa { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.qitem { background: var(--surface); padding: 1.3rem 1.4rem; }
+.qitem .q {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: var(--step-1);
+  font-weight: 600;
+  color: var(--ink-2);
+  line-height: 1.32;
+  max-width: 60ch;
+}
+.qitem .a { margin-top: 0.6rem; color: var(--ink-muted); font-size: var(--step--1); max-width: 76ch; }
+.qitem .a + .a { margin-top: 0.5rem; }
+.qitem .a strong { color: var(--ink-2); font-weight: 600; }
+
+/* ---------- run sheet ---------- */
+
+.runsheet { margin-top: 1.4rem; border: 1px solid var(--border); background: var(--surface); }
+.beat { display: grid; grid-template-columns: 5.2rem 1fr; gap: 1.2rem; padding: 1rem 1.3rem; border-bottom: 1px solid var(--border-soft); }
+.beat:last-child { border-bottom: 0; }
+.beat .t { font-family: "Geist Mono", monospace; font-size: 0.78rem; color: var(--accent); padding-top: 0.12rem; }
+.beat .what { font-weight: 600; color: var(--ink-2); font-size: var(--step-0); }
+.beat .say { color: var(--ink-muted); font-size: var(--step--1); margin-top: 0.28rem; max-width: 70ch; }
+.beat .screen { font-size: 0.76rem; color: var(--ink-faint); margin-top: 0.3rem; font-family: "Geist Mono", monospace; }
+
+/* ---------- callout ---------- */
+
+.callout {
+  margin-top: 1.5rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--tier-a);
+  background: var(--surface);
+  padding: 1.15rem 1.3rem;
+  max-width: var(--measure);
+}
+.callout h4 { font-family: "Geist", sans-serif; font-size: var(--step-0); font-weight: 600; color: var(--ink-2); }
+.callout p { font-size: var(--step--1); color: var(--ink-muted); margin-top: 0.4rem; }
+
+.limits { margin-top: 1.3rem; display: flex; flex-direction: column; gap: 0.85rem; max-width: var(--measure); }
+.limit { display: grid; grid-template-columns: auto 1fr; gap: 0.75rem; align-items: baseline; }
+.limit .dot { width: 5px; height: 5px; border-radius: 999px; background: var(--accent); margin-top: 0.5rem; }
+.limit p { font-size: var(--step--1); color: var(--ink-muted); }
+.limit b { color: var(--ink-2); font-weight: 600; }
+
+footer.docfoot {
+  border-top: 1px solid var(--border);
+  margin-top: 4rem;
+  padding-top: 1.4rem;
+  font-size: var(--step--1);
+  color: var(--ink-faint);
+  max-width: var(--measure);
+}
+
+@media (max-width: 900px) {
+  .shell { grid-template-columns: 1fr; gap: 0; }
+  .toc {
+    position: static;
+    padding-top: 2rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .toc a { border-left: 0; border: 1px solid var(--border); padding: 0.28rem 0.6rem; border-radius: 2px; }
+  .toc-label { width: 100%; margin-bottom: 0.2rem; }
+  main { padding-top: 2rem; }
+  .masthead h1 { font-size: var(--step-3); }
+  .vblock { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+</style>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="wordmark">
+      <span class="mark">&#9873;</span>
+      <span class="wordmark-text">PARAKH</span>
+      <span class="ps-code mono">SIH26102 &middot; MoSPI</span>
+    </div>
+    <h1>A review queue.<br><em>Not a verdict.</em></h1>
+    <p class="masthead-sub">
+      Everything you need to present and defend PARAKH — the argument, the real numbers,
+      the demo run sheet, and honest answers to the questions judges will actually ask.
+    </p>
+    <div class="masthead-meta">
+      <span>Corpus ingested <b>2026-09-05</b></span>
+      <span>Source <b>eSAKSHI (mplads.mospi.gov.in)</b></span>
+      <span>Coverage <b>FY 2023-24 &rarr; FY 2026-27</b></span>
+      <span>Lok Sabha + Rajya Sabha, <b>18th term</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="toc">
+    <span class="toc-label">Contents</span>
+    <a href="#pitch"><span class="n">01</span> The 30-second answer</a>
+    <a href="#problem"><span class="n">02</span> The problem &amp; the trap</a>
+    <a href="#build"><span class="n">03</span> What we built</a>
+    <a href="#detectors"><span class="n">04</span> The 13 detectors</a>
+    <a href="#validation"><span class="n">05</span> How we validated it</a>
+    <a href="#restraint"><span class="n">06</span> The restraint contract</a>
+    <a href="#demo"><span class="n">07</span> Demo run sheet</a>
+    <a href="#questions"><span class="n">08</span> Hard questions</a>
+    <a href="#limits"><span class="n">09</span> Known limits</a>
+    <a href="#numbers"><span class="n">10</span> Numbers cheat sheet</a>
+  </nav>
+
+  <main>
+
+    <!-- 01 -->
+    <section id="pitch">
+      <span class="eyebrow">01 &mdash; The 30-second answer</span>
+      <h2>If a judge gives you one sentence</h2>
+
+      <div class="sayit">
+        <span class="sayit-label">Say this</span>
+        <p>&ldquo;MPLADS moves roughly &#8377;5 crore per MP per year through 769 district agencies.
+        PARAKH reads the whole public record, flags the 28.6% of works that warrant a human look,
+        and states its evidence and a plausible innocent explanation for every single one &mdash;
+        because an AI that decides which MP is guilty is a defamation engine, not a tool.&rdquo;</p>
+      </div>
+
+      <div class="prose">
+        <p>Then, if they want more, the three follow-on beats in order: <strong>what it reads</strong>
+        (1,31,437 works and 1,09,006 payments, hand-pulled from the ministry's own citizen dashboard),
+        <strong>what it does</strong> (13 detectors, 5 deterministic and 8 peer-relative statistical),
+        and <strong>what it refuses to do</strong> (rank MPs by suspicion &mdash; enforced by a test in CI,
+        not a promise in a slide).</p>
+        <p>The last beat is the one that wins the room. Every team at SIH can find anomalies.
+        The differentiator is that PARAKH is built to be <em>wrong safely</em>.</p>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><span class="v">1,31,437</span><span class="k">works ingested</span></div>
+        <div class="stat"><span class="v">37,568</span><span class="k">flagged for review (28.6%)</span></div>
+        <div class="stat"><span class="v">55,609</span><span class="k">individual flags</span></div>
+        <div class="stat"><span class="v">13</span><span class="k">detectors, 2 tiers</span></div>
+        <div class="stat"><span class="v">5</span><span class="k">validation methods</span></div>
+      </div>
+    </section>
+
+    <!-- 02 -->
+    <section id="problem">
+      <span class="eyebrow">02 &mdash; The problem &amp; the trap</span>
+      <h2>Why this problem statement is a trap</h2>
+
+      <div class="prose">
+        <p>MPLADS gives every Member of Parliament an annual allocation for local infrastructure,
+        spent through district implementing agencies. The records are public on eSAKSHI &mdash;
+        but they are published as per-tile spreadsheet exports, one house at a time.
+        Nobody can see the scheme as a whole, which means nobody can see the pattern in it.</p>
+        <p>So the naive build is obvious: score every MP for irregularity, rank them, ship the leaderboard.
+        <strong>That system is a defamation engine.</strong> MPLADS works are implemented by district
+        officers, not by MPs; an MP recommends, a District Authority sanctions and executes.
+        A high anomaly count against a member's name is very often a statement about their district
+        administration, their terrain, or their data-entry quality &mdash; and publishing it as a
+        suspicion score is both wrong and legally reckless.</p>
+        <p>The problem statement itself warns about this. We treated that warning as the primary
+        design constraint rather than a disclaimer to add at the end &mdash; which is why the
+        <a href="#restraint">restraint contract</a> was written before the first detector.</p>
+      </div>
+
+      <div class="callout">
+        <h4>The line to hold in the room</h4>
+        <p>Every flag says <em>&ldquo;this warrants a look&rdquo;</em> &mdash; never
+        <em>&ldquo;this is fraud.&rdquo;</em> If a judge pushes you to call something corrupt,
+        that is the moment to hold the line, not soften it. The restraint is the product.</p>
+      </div>
+    </section>
+
+    <!-- 03 -->
+    <section id="build">
+      <span class="eyebrow">03 &mdash; What we built</span>
+      <h2>A batch pipeline, not a live guess</h2>
+
+      <div class="prose">
+        <p>Nothing in the served application computes a detector at request time. Raw exports are
+        parsed into a canonical layer, every detector runs offline against that snapshot, and the
+        results are written into a single read-only database the API only ever <code>SELECT</code>s from.
+        A full rebuild takes well under a minute, and is deterministic.</p>
+      </div>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th>Stage</th><th>What happens</th><th>Tech</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="dname">Ingest</td>
+              <td>Six eSAKSHI CSV exports per house, parsed as all-text then explicitly typed. Composite fields split (<code class="code">WS/MP187/2023-2024/1199-Construction&hellip;</code> &rarr; ID + category), the two houses' differing schemas reconciled, a confirmed tab-corruption in ~35K work IDs repaired so joins line up.</td>
+              <td class="mono">Polars</td>
+            </tr>
+            <tr>
+              <td class="dname">Canonical layer</td>
+              <td>One <code class="code">works</code> table (recommended left-joined to sanctioned and completed, so unsanctioned works survive), plus payments, allocations and calamity consents.</td>
+              <td class="mono">Parquet</td>
+            </tr>
+            <tr>
+              <td class="dname">Detect</td>
+              <td>13 detectors, each a pure function returning the same four columns: work ID, detector, tier, evidence sentence.</td>
+              <td class="mono">Polars, scikit-learn</td>
+            </tr>
+            <tr>
+              <td class="dname">Enrich</td>
+              <td>Bipartite MP&harr;agency and agency&harr;vendor graphs with Louvain communities; a stall-risk model; a 542-seat constituency scorecard.</td>
+              <td class="mono">NetworkX, LightGBM</td>
+            </tr>
+            <tr>
+              <td class="dname">Serve</td>
+              <td>Read-only API over the built database; every endpoint is a SELECT. Atomic rebuild &mdash; the old database keeps serving until a new one is complete.</td>
+              <td class="mono">FastAPI, DuckDB</td>
+            </tr>
+            <tr>
+              <td class="dname">Review</td>
+              <td>Flag queue, work detail with evidence and benign explanation, agency network, at-risk list, scorecard, and a reviewer override that closes the loop.</td>
+              <td class="mono">Next.js, Cytoscape</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>One thing worth demoing that judges won't expect</h3>
+      <div class="prose">
+        <p>PARAKH accepts <strong>new datasets at runtime</strong>. Upload another set of the same six
+        exports &mdash; a later snapshot, a different house, a pilot district &mdash; and it joins the
+        corpus alongside the built-in data, re-runs all 13 detectors against the merged whole, and
+        becomes filterable as its own source. It refuses an upload whose work IDs already exist,
+        because double-counting the same works would corrupt every peer-group statistic.</p>
+      </div>
+    </section>
+
+    <!-- 04 -->
+    <section id="detectors">
+      <span class="eyebrow">04 &mdash; The 13 detectors</span>
+      <h2>Two tiers, never conflated</h2>
+
+      <div class="prose">
+        <p><strong>Tier A is a deterministic contradiction</strong> a human can verify by hand from the
+        evidence sentence alone &mdash; arithmetic or logic, no statistics. <strong>Tier B is a
+        statistical outlier against a named peer group</strong>, and abstains entirely below 30 peers
+        rather than firing on noise. The tier is visible on the card, the list and the filter,
+        always.</p>
+      </div>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Detector</th><th>Fires on</th><th class="n">Flags</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="pill pill-a">A1</span></td><td class="dname">Ledger contradiction</td><td>Payments exceed the sanctioned amount, a non-positive sanction, or completion dated before sanction.</td><td class="n zero">0</td></tr>
+            <tr><td><span class="pill pill-a">A2</span></td><td class="dname">Phantom completion</td><td>Marked <em>Work Completed</em>, but under 5% of the sanction has actually been paid out.</td><td class="n">39</td></tr>
+            <tr><td><span class="pill pill-a">A3</span></td><td class="dname">Duplicate record</td><td>The same real work ID appears more than once in the source export.</td><td class="n zero">0</td></tr>
+            <tr><td><span class="pill pill-a">A4</span></td><td class="dname">Orphan sanction</td><td>A sanctioned work missing its implementing agency, state, or category.</td><td class="n">636</td></tr>
+            <tr><td><span class="pill pill-a">A5</span></td><td class="dname">Unverified completion</td><td>A completion date on file with no geotagged photo evidence attached.</td><td class="n">12,681</td></tr>
+            <tr><td><span class="pill pill-b">B1</span></td><td class="dname">Peer cost outlier</td><td>Robust z-score of sanction amount within category &times; state &times; financial year.</td><td class="n">9,144</td></tr>
+            <tr><td><span class="pill pill-b">B2</span></td><td class="dname">Cost-per-unit outlier</td><td>&#8377; per metre / unit / litre against the same category and unit elsewhere in the state.</td><td class="n">550</td></tr>
+            <tr><td><span class="pill pill-b">B3</span></td><td class="dname">Stalled work</td><td>Open past the empirical P95 completion time learned from completed peers in that category and state.</td><td class="n">7,597</td></tr>
+            <tr><td><span class="pill pill-b">B4</span></td><td class="dname">Threshold bunching</td><td>An agency clusters sanctions just under a round-rupee approval tier, far above the national share.</td><td class="n">6,304</td></tr>
+            <tr><td><span class="pill pill-b">B5</span></td><td class="dname">Work splitting</td><td>3+ similar, comparably-sized works from one agency and district inside 30 days, no piece dominating.</td><td class="n">2,347</td></tr>
+            <tr><td><span class="pill pill-b">B6</span></td><td class="dname">Agency concentration</td><td>One agency's share of an MP's sanctioned value above the 95th percentile across MPs who had a choice.</td><td class="n">3,241</td></tr>
+            <tr><td><span class="pill pill-b">B7</span></td><td class="dname">Year-end bunching</td><td>Share of an MP's sanctions landing in the financial year's final 90 days, against all MPs that year.</td><td class="n">3,436</td></tr>
+            <tr><td><span class="pill pill-b">B8</span></td><td class="dname">Near-duplicate funding</td><td>TF-IDF similarity &ge;0.90 between distinct works in one district within 180 days.</td><td class="n">9,634</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="chart">
+        <div class="bar-row"><span class="bar-code">A5</span><span class="bar-track"><span class="bar-fill" style="width:100%;background:#be123c"></span></span><span class="bar-val">12,681</span></div>
+        <div class="bar-row"><span class="bar-code">B8</span><span class="bar-track"><span class="bar-fill" style="width:76%;background:#b45309"></span></span><span class="bar-val">9,634</span></div>
+        <div class="bar-row"><span class="bar-code">B1</span><span class="bar-track"><span class="bar-fill" style="width:72.1%;background:#b45309"></span></span><span class="bar-val">9,144</span></div>
+        <div class="bar-row"><span class="bar-code">B3</span><span class="bar-track"><span class="bar-fill" style="width:59.9%;background:#b45309"></span></span><span class="bar-val">7,597</span></div>
+        <div class="bar-row"><span class="bar-code">B4</span><span class="bar-track"><span class="bar-fill" style="width:49.7%;background:#b45309"></span></span><span class="bar-val">6,304</span></div>
+        <div class="bar-row"><span class="bar-code">B7</span><span class="bar-track"><span class="bar-fill" style="width:27.1%;background:#b45309"></span></span><span class="bar-val">3,436</span></div>
+        <div class="bar-row"><span class="bar-code">B6</span><span class="bar-track"><span class="bar-fill" style="width:25.6%;background:#b45309"></span></span><span class="bar-val">3,241</span></div>
+        <div class="bar-row"><span class="bar-code">B5</span><span class="bar-track"><span class="bar-fill" style="width:18.5%;background:#b45309"></span></span><span class="bar-val">2,347</span></div>
+        <div class="bar-row"><span class="bar-code">A4</span><span class="bar-track"><span class="bar-fill" style="width:5%;background:#be123c"></span></span><span class="bar-val">636</span></div>
+        <div class="bar-row"><span class="bar-code">B2</span><span class="bar-track"><span class="bar-fill" style="width:4.3%;background:#b45309"></span></span><span class="bar-val">550</span></div>
+        <div class="bar-row"><span class="bar-code">A2</span><span class="bar-track"><span class="bar-fill" style="width:0.3%;background:#be123c"></span></span><span class="bar-val">39</span></div>
+        <div class="bar-row"><span class="bar-code">A1</span><span class="bar-track"><span class="bar-fill" style="width:0%;background:#be123c"></span></span><span class="bar-val zero">0</span></div>
+        <div class="bar-row"><span class="bar-code">A3</span><span class="bar-track"><span class="bar-fill" style="width:0%;background:#be123c"></span></span><span class="bar-val zero">0</span></div>
+      </div>
+      <p class="chart-note">Flag volume per detector, scaled to A5. <strong>A1 and A3 fire zero times on this
+      corpus</strong> &mdash; say so before you're asked: the ministry's own export is internally consistent
+      on ledger arithmetic and carries no duplicate work IDs. Both detectors are real and tested; this
+      dataset is simply clean on those two axes. That is a finding, not a gap.</p>
+
+      <h3>Tier composition of the 37,568 flagged works</h3>
+      <div class="stats">
+        <div class="stat"><span class="v">9,199</span><span class="k">Tier A only</span></div>
+        <div class="stat"><span class="v">24,317</span><span class="k">Tier B only</span></div>
+        <div class="stat"><span class="v">4,052</span><span class="k">both tiers</span></div>
+      </div>
+    </section>
+
+    <!-- 05 -->
+    <section id="validation">
+      <span class="eyebrow">05 &mdash; How we validated it</span>
+      <h2>Five methods, including the unflattering results</h2>
+
+      <div class="prose">
+        <p>&ldquo;How do you validate unsupervised anomaly detection with no labels?&rdquo; is the
+        hardest question in this problem statement, and it <em>will</em> be asked. We answer it five
+        different ways and publish all five on the <code class="code">/validation</code> page &mdash;
+        including the two that came out badly. Volunteering a weak result before a judge finds it
+        converts a vulnerability into a credibility win.</p>
+      </div>
+
+      <div class="vblocks">
+        <div class="vblock">
+          <h4>1. Synthetic injection &mdash; 182 constructed anomalies</h4>
+          <span class="verdict v-good">Strong</span>
+          <p>Five known anomaly types injected into a copy of the real corpus, then run through the
+          untouched detector suite. Recall is per-detector; &ldquo;any&rdquo; means some detector caught it.</p>
+          <div class="figures">duplicate_record &rarr; A3 100% &middot; phantom_completion &rarr; A2 100% &middot; agency_concentration &rarr; B6 100% &middot; inflated_cost &rarr; B1 77.5% (82.5% any) &middot; split_work &rarr; B5 57.1% (92.9% any)</div>
+        </div>
+
+        <div class="vblock">
+          <h4>2. Precision @ k &mdash; the ranking, not the detectors</h4>
+          <span class="verdict v-weak">Weak, and we say so</span>
+          <p>Of the top 50 and top 100 works in the default ranking, <strong>0%</strong> are injected
+          anomalies. The single-flag synthetic injections rank below real works that stack many flags
+          from one legitimate batch-procurement pattern. This is a genuine limitation of ranking by
+          flag count, and it is stated on the page rather than buried.</p>
+          <div class="figures">P@50 0.0% &middot; P@100 0.0% &middot; P@200 4.0% &middot; P@500 2.8% &middot; P@1000 2.5%</div>
+        </div>
+
+        <div class="vblock">
+          <h4>3. Bootstrap stability &mdash; does a detector agree with itself?</h4>
+          <span class="verdict v-mixed">Mixed</span>
+          <p>Ten bootstrap resamples per detector, measuring Jaccard overlap of the flagged set against
+          the baseline. Around 0.5&ndash;0.6 is reasonable for a resampled statistical detector.
+          <strong>B7 at 0.056 is genuinely unstable</strong> &mdash; year-end bunching depends on a
+          95th-percentile cutoff across MPs that moves sharply under resampling. Know this number
+          before a judge computes it.</p>
+          <div class="figures">B4 0.589 &middot; B3 0.560 &middot; B2 0.542 &middot; B1 0.523 &middot; B6 0.361 &middot; B7 0.056 (min 0.0)</div>
+        </div>
+
+        <div class="vblock">
+          <h4>4. Known-case backtest &mdash; 0 of 2 matched</h4>
+          <span class="verdict v-mixed">Structural miss</span>
+          <p>Two researched, named CAG/press cases were searched for in this corpus. Neither matched &mdash;
+          and the reason is structural, not a search failure: CAG audits review works that are already
+          years old, while this corpus is the 18th term, sanctioned within the last one to three years.
+          One case's agency never appears in the corpus at all.</p>
+          <div class="figures">CAG Report No. 22 of 2025 &rarr; agency absent from corpus &middot; press coverage ~2019&ndash;2022 &rarr; predates 18th-term coverage</div>
+        </div>
+
+        <div class="vblock">
+          <h4>5. Manual adjudication &mdash; every one of the top 50 reviewed by hand</h4>
+          <span class="verdict v-mixed">Honest</span>
+          <p>All 50 top-ranked flagged works were reviewed manually and collapse to just
+          <strong>8 real batch-procurement programmes</strong>: 49 works benign-explained, 1 undecided,
+          <strong>0 plausibly irregular</strong>. This is the same finding as precision@k from the other
+          side &mdash; the ranking surfaces large legitimate rollouts ahead of rarer single-instance
+          anomalies. It is the most important honest result in the project.</p>
+          <div class="figures">50 works &rarr; 8 clusters &middot; benign_explained 49 &middot; undecided 1 &middot; plausibly_irregular 0</div>
+        </div>
+
+        <div class="vblock">
+          <h4>Bonus: the stall-risk model, tested on the future</h4>
+          <span class="verdict v-good">Solid</span>
+          <p>A LightGBM classifier predicts which currently-on-track works will stall, split by sanction
+          date rather than randomly &mdash; trained on the past, tested on the future. Calibration is
+          reported honestly: works scored ~87% actually stall about 67% of the time, and the calibration
+          curve is drawn on the page showing exactly that gap.</p>
+          <div class="figures">52,417 train / 13,120 test &middot; PR-AUC 0.577 vs 0.381 base rate &middot; ROC-AUC 0.711 &middot; 31,207 works scored</div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- 06 -->
+<section class="band" id="restraint">
+  <div class="band-inner">
+    <span class="eyebrow">06 &mdash; The restraint contract</span>
+    <h2>Seven rules, enforced by code</h2>
+    <p class="lede">This is the differentiator. Each of these is a mechanism in the repository, not a
+    principle in a slide &mdash; and rule 1 fails the build if violated.</p>
+
+    <div class="rules">
+      <div class="rule"><span class="rn">01</span><h4>Vocabulary lock</h4><p>A test greps the entire codebase and all UI copy for a fixed list of accusatory words &mdash; fraud, corrupt, guilty, scam, siphon, embezzle &mdash; before every build. It has caught real violations during development and forced the copy to be rewritten, never allowlisted.</p></div>
+      <div class="rule"><span class="rn">02</span><h4>No flag without evidence</h4><p>Every flag states its trigger, its peer group, the n of that group, and the observed value in one plain sentence &mdash; or it does not ship.</p></div>
+      <div class="rule"><span class="rn">03</span><h4>Benign explanations</h4><p>All 13 detectors carry a curated, plausible innocent explanation, shown by default beside the evidence &mdash; not behind a tooltip or a click.</p></div>
+      <div class="rule"><span class="rn">04</span><h4>Confidence tier always visible</h4><p>A or B appears on the card, in the list and in the filter. Deterministic and statistical findings are never presented as the same kind of thing.</p></div>
+      <div class="rule"><span class="rn">05</span><h4>No MP suspicion ranking</h4><p>Works and agencies are ranked. Members of Parliament never are &mdash; anywhere in the product.</p></div>
+      <div class="rule"><span class="rn">06</span><h4>Provenance on every screen</h4><p>Source, ingestion date, record counts, financial-year coverage and coverage percentages sit in the footer of every page, derived from the data itself so they cannot go stale.</p></div>
+      <div class="rule"><span class="rn">07</span><h4>Reviewer override</h4><p>A human can mark a flag &ldquo;reviewed &mdash; explained.&rdquo; It is suppressed from the queue, never deleted, always reversible, and stored outside the rebuildable database so a refresh cannot wipe it.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="shell">
+  <div></div>
+  <main style="padding-top:3.5rem">
+
+    <!-- 07 -->
+    <section id="demo">
+      <span class="eyebrow">07 &mdash; Demo run sheet</span>
+      <h2>Five minutes, in order</h2>
+      <div class="prose">
+        <p>Start both servers before you walk in. Open on <code class="code">/</code>.
+        If the wifi fails, the offline recording in <code class="code">docs/</code> covers the same beats.</p>
+      </div>
+
+      <div class="runsheet">
+        <div class="beat">
+          <div class="t">0:00</div>
+          <div>
+            <div class="what">The problem</div>
+            <div class="say">&#8377;5 crore per MP per year, 1.3 lakh works, 769 agencies, no way to see it whole. Real irregularities exist &mdash; but an AI that decides which MP is at fault is a defamation engine.</div>
+            <div class="screen">/ &mdash; landing hero</div>
+          </div>
+        </div>
+        <div class="beat">
+          <div class="t">0:30</div>
+          <div>
+            <div class="what">What PARAKH is</div>
+            <div class="say">A review queue. 13 detectors, 5 deterministic and 8 peer-relative. Works and agencies get ranked; MPs never do.</div>
+            <div class="screen">/flags &mdash; scroll the queue, point at the A/B pills</div>
+          </div>
+        </div>
+        <div class="beat">
+          <div class="t">1:10</div>
+          <div>
+            <div class="what">One flag, all the way down</div>
+            <div class="say">Open a Tier A work. Read the evidence sentence aloud &mdash; then read the benign explanation directly under it. &ldquo;Shown by default, on every detector.&rdquo; Then mark it reviewed and show it leave the queue.</div>
+            <div class="screen">/flags &rarr; a work detail &rarr; &ldquo;mark reviewed &mdash; explained&rdquo;</div>
+          </div>
+        </div>
+        <div class="beat">
+          <div class="t">2:15</div>
+          <div>
+            <div class="what">Scale and structure</div>
+            <div class="say">The agency network, Louvain-clustered: 27 thin-file agencies, 19 whose name spans more than one state &mdash; mostly the 2014 Telangana split, one real mismatch worth a look.</div>
+            <div class="screen">/graph, then /dashboard</div>
+          </div>
+        </div>
+        <div class="beat">
+          <div class="t">3:00</div>
+          <div>
+            <div class="what">The model, tested on the future</div>
+            <div class="say">Split by sanction date, never randomly. PR-AUC 0.577 against a 0.381 base rate &mdash; and the calibration curve, with the gap at the high end stated on the page.</div>
+            <div class="screen">/at-risk</div>
+          </div>
+        </div>
+        <div class="beat">
+          <div class="t">3:40</div>
+          <div>
+            <div class="what">Validation &mdash; lead with the weak result</div>
+            <div class="say">Five methods. Say the precision@50 of 0% and the 49-of-50 benign adjudication <em>yourself</em>, before they ask. Then explain why: the ranking surfaces large legitimate rollouts ahead of rare single anomalies, and we publish that.</div>
+            <div class="screen">/validation</div>
+          </div>
+        </div>
+        <div class="beat">
+          <div class="t">4:20</div>
+          <div>
+            <div class="what">Close on restraint</div>
+            <div class="say">Seven rules enforced by code, not promised in a slide. The vocabulary lock fails the build. That is why this is a tool and not a defamation engine.</div>
+            <div class="screen">/methodology, or the landing page's restraint section</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <h4>Before you present: re-check the numbers</h4>
+        <p>The script in <code class="code">docs/demo-script.md</code> was written against an earlier
+        build and now quotes stale figures (38,934 flagged and PR-AUC 0.54). The current values are
+        <strong>37,568 flagged</strong> and <strong>PR-AUC 0.577</strong>. Every number in this brief is
+        from the live database as of 2026-09-05 &mdash; if you rebuild, re-read them off
+        <code class="code">/dashboard</code> and <code class="code">/validation</code>.</p>
+      </div>
+    </section>
+
+    <!-- 08 -->
+    <section id="questions">
+      <span class="eyebrow">08 &mdash; Hard questions</span>
+      <h2>What judges will actually ask</h2>
+      <div class="prose">
+        <p>Answer each of these in two sentences, then stop. The instinct to keep talking after a
+        hard question is what loses the exchange.</p>
+      </div>
+
+      <div class="qa">
+        <div class="qitem">
+          <div class="q">&ldquo;How do you validate this with no ground-truth labels?&rdquo;</div>
+          <p class="a">Five ways, and we publish all of them: synthetic injection of 182 constructed
+          anomalies, precision@k, bootstrap stability, a known-case backtest against CAG and press
+          reports, and manual adjudication of the entire top 50. Two of the five came out unflattering
+          and are on the page anyway.</p>
+        </div>
+        <div class="qitem">
+          <div class="q">&ldquo;28.6% of works flagged is far too many. Isn't that useless?&rdquo;</div>
+          <p class="a"><strong>Concede the premise, then reframe.</strong> It is too many to act on
+          directly &mdash; and 12,681 of those flags are A5, works marked complete with no photo on
+          file, which is largely a portal-era artifact rather than 12,681 problems.</p>
+          <p class="a">The tier filter and the reviewer override exist precisely because triage is the
+          job. Filter to Tier A and the queue is 9,199. This is a funnel for human reviewers, not a
+          finished accusation list.</p>
+        </div>
+        <div class="qitem">
+          <div class="q">&ldquo;Your manual review found zero irregularities in the top 50. Doesn't that mean it failed?&rdquo;</div>
+          <p class="a">It means the <em>ranking</em> underperforms, and we say that on the validation
+          page in those words. The top 50 collapse into 8 legitimate batch-procurement programmes,
+          because ranking by flag count rewards works that stack many flags from one benign pattern.</p>
+          <p class="a">The detectors themselves score 77&ndash;100% recall on injected anomalies. The
+          honest statement is: the detectors work, the default ranking needs a composite score, and
+          that is named as the next piece of work rather than hidden.</p>
+        </div>
+        <div class="qitem">
+          <div class="q">&ldquo;Why should I trust a statistical flag at all?&rdquo;</div>
+          <p class="a">You shouldn't trust it &mdash; you should check it, which is the entire design.
+          Every Tier B flag names its peer group and the n of that group, abstains below 30 peers, and
+          carries a plausible innocent explanation on the same card.</p>
+        </div>
+        <div class="qitem">
+          <div class="q">&ldquo;What stops this from defaming an MP?&rdquo;</div>
+          <p class="a">Five things, all mechanical: MPs are never ranked; a CI test fails the build if
+          accusatory vocabulary appears anywhere in the codebase or copy; every flag carries a benign
+          explanation by default; the deterministic/statistical distinction is always visible; and a
+          human reviewer can suppress any flag reversibly.</p>
+          <p class="a">Structurally, MPs recommend and district authorities sanction and execute &mdash;
+          so an MP-level suspicion score would be attributing district-administration behaviour to a
+          member. That is why the ranking is on works and agencies.</p>
+        </div>
+        <div class="qitem">
+          <div class="q">&ldquo;B7's stability is 0.056. Why is it still shipping?&rdquo;</div>
+          <p class="a">Because we would rather ship it with its instability published than quietly drop
+          the inconvenient detector. Year-end bunching depends on a 95th-percentile cutoff across MPs
+          that moves sharply under resampling, so the specific set of flagged works is not reproducible
+          even though the underlying pattern is real and well-documented in public finance.</p>
+          <p class="a">If pressed on what you'd do next: raise the eligibility threshold, or replace the
+          percentile cutoff with an absolute share test.</p>
+        </div>
+        <div class="qitem">
+          <div class="q">&ldquo;Two detectors find nothing. Why include them?&rdquo;</div>
+          <p class="a">A1 and A3 firing zero times is a result about the ministry's data quality, not a
+          bug &mdash; the export is internally consistent on ledger arithmetic and free of duplicate work
+          IDs. Both are fully implemented and both score 100% recall when the anomaly is synthetically
+          injected, so they would fire on a dirtier dataset.</p>
+        </div>
+        <div class="qitem">
+          <div class="q">&ldquo;Is this just a dashboard? Where's the AI?&rdquo;</div>
+          <p class="a">The statistical layer is peer-relative robust z-scoring with abstention, TF-IDF
+          similarity clustering for work-splitting and near-duplicate detection, Louvain community
+          detection on the agency graph, and a gradient-boosted stall-risk model evaluated on a forward
+          time split.</p>
+          <p class="a">The deliberate choice is that none of it runs at request time &mdash; it is a
+          batch pipeline, so every number on screen is reproducible and auditable rather than a live
+          model output nobody can re-derive.</p>
+        </div>
+        <div class="qitem">
+          <div class="q">&ldquo;Can this scale to the whole scheme, or other schemes?&rdquo;</div>
+          <p class="a">It already ingests both houses at 1.3 lakh works, and a full rebuild is under a
+          minute. New data can be added at runtime through the upload page without touching code &mdash;
+          the parser was built so a new term or house is a directory, not a patch.</p>
+        </div>
+        <div class="qitem">
+          <div class="q">&ldquo;What would you do with three more months?&rdquo;</div>
+          <p class="a">A composite ranking score to fix precision@k, which is the clearest weakness.
+          Then Tier C &mdash; the three unshipped detectors &mdash; and a per-detector precision estimate
+          from a larger hand-adjudicated sample.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 09 -->
+    <section id="limits">
+      <span class="eyebrow">09 &mdash; Known limits</span>
+      <h2>Say these before you're asked</h2>
+      <div class="prose">
+        <p>Each of these is already stated somewhere in the product. Volunteering them reads as
+        rigour; being caught by them reads as overselling.</p>
+      </div>
+
+      <div class="limits">
+        <div class="limit"><span class="dot"></span><p><b>The default ranking underperforms.</b> Precision@50 is 0%, and hand-adjudication of the top 50 found 49 benign and 0 plausibly irregular. A composite score is the named fix.</p></div>
+        <div class="limit"><span class="dot"></span><p><b>B7 is not reproducible.</b> Bootstrap Jaccard of 0.056 means the specific flagged set shifts substantially under resampling.</p></div>
+        <div class="limit"><span class="dot"></span><p><b>Quantity coverage is 4.9%.</b> B2 can only score cost-per-unit where a quantity is extractable from free text, and MPLADS descriptions are overwhelmingly location narratives &mdash; &ldquo;from X's house to Y's house&rdquo; &mdash; not specifications.</p></div>
+        <div class="limit"><span class="dot"></span><p><b>Photo evidence exists for only 23.8% of works</b>, which is why A5 is the highest-volume detector and why it should be read as a coverage statistic as much as an anomaly.</p></div>
+        <div class="limit"><span class="dot"></span><p><b>The known-case backtest matched nothing</b>, for the structural reason that CAG audits lag this corpus by years.</p></div>
+        <div class="limit"><span class="dot"></span><p><b>Three planned Tier C detectors were not shipped</b> &mdash; 13 of 16. The methodology page names them rather than quietly reducing the count.</p></div>
+        <div class="limit"><span class="dot"></span><p><b>No constituency map and no per-capita normalisation.</b> No boundary GeoJSON and no population dataset were ever sourced, so both were left out rather than faked.</p></div>
+        <div class="limit"><span class="dot"></span><p><b>Data is hand-downloaded, not scraped.</b> Provenance is honest and reproducible, but a refresh is a manual pull from eSAKSHI's export buttons.</p></div>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section id="numbers">
+      <span class="eyebrow">10 &mdash; Numbers cheat sheet</span>
+      <h2>Everything you might be asked to recall</h2>
+
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Figure</th><th class="n">Value</th><th>Where it shows</th></tr></thead>
+          <tbody>
+            <tr><td>Works ingested</td><td class="n">1,31,437</td><td>every page footer</td></tr>
+            <tr><td>Payment transactions</td><td class="n">1,09,006</td><td>footer</td></tr>
+            <tr><td>Flagged works</td><td class="n">37,568 (28.6%)</td><td>/flags header</td></tr>
+            <tr><td>Total flags</td><td class="n">55,609</td><td>/dashboard</td></tr>
+            <tr><td>Implementing agencies</td><td class="n">769</td><td>footer &middot; 761 with sanctioned works</td></tr>
+            <tr><td>Distinct vendors</td><td class="n">28,276</td><td>agency detail pages</td></tr>
+            <tr><td>MPs covered</td><td class="n">733</td><td>footer</td></tr>
+            <tr><td>States &amp; UTs</td><td class="n">36</td><td>footer</td></tr>
+            <tr><td>Lok Sabha constituencies scored</td><td class="n">542</td><td>/constituencies</td></tr>
+            <tr><td>Works scored for stall risk</td><td class="n">31,207</td><td>/at-risk</td></tr>
+            <tr><td>Financial years covered</td><td class="n">2023-24 &rarr; 2026-27</td><td>footer, /dashboard</td></tr>
+            <tr><td>Quantity coverage</td><td class="n">4.9%</td><td>footer, /methodology</td></tr>
+            <tr><td>Photo-evidence coverage</td><td class="n">23.8%</td><td>footer</td></tr>
+            <tr><td>Description corruption rate</td><td class="n">0.14%</td><td>/methodology</td></tr>
+            <tr><td>Stall model PR-AUC / base rate</td><td class="n">0.577 / 0.381</td><td>/at-risk</td></tr>
+            <tr><td>Stall model ROC-AUC</td><td class="n">0.711</td><td>/at-risk</td></tr>
+            <tr><td>Automated tests</td><td class="n">141</td><td><code class="code">pytest</code></td></tr>
+            <tr><td>Peer-group abstention floor</td><td class="n">30</td><td>every Tier B evidence line</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <footer class="docfoot">
+        <p>All figures read from the built database on 2026-09-05, after the current detector and
+        provenance fixes. Source: eSAKSHI, the MPLADS citizen dashboard (mplads.mospi.gov.in),
+        Lok Sabha and Rajya Sabha, 18th term &mdash; hand-exported, no scraper.
+        Rebuild the corpus and these numbers move; re-read them off <code class="code">/dashboard</code>
+        and <code class="code">/validation</code> before presenting.</p>
+      </footer>
+    </section>
+
+  </main>
+</div>
