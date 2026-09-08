@@ -1,0 +1,743 @@
+<title>PARAKH Field Manual</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground: #F4F6F9;
+    --surface: #FFFFFF;
+    --sunken: #EDF0F5;
+    --ink: #121D38;
+    --ink-2: #2B3A5C;
+    --muted: #5B6A88;
+    --faint: #8695B0;
+    --rule: #D5DCE7;
+    --rule-soft: #E5EAF1;
+    --accent: #A2570A;
+    --accent-soft: #FBF1E2;
+    --tier-a: #B01238;
+    --tier-a-bg: #FDF0F2;
+    --tier-b: #8A5206;
+    --tier-b-bg: #FDF6E7;
+    --good: #16704A;
+    --good-bg: #EBF6F0;
+    --shadow: 0 1px 2px rgba(18, 29, 56, .06), 0 8px 24px -16px rgba(18, 29, 56, .28);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0C1322;
+      --surface: #141D33;
+      --sunken: #1B2540;
+      --ink: #E9EEF8;
+      --ink-2: #CBD6EA;
+      --muted: #93A3C2;
+      --faint: #6E7E9E;
+      --rule: #2A3654;
+      --rule-soft: #212C46;
+      --accent: #E8AC4A;
+      --accent-soft: #2A2213;
+      --tier-a: #F2879F;
+      --tier-a-bg: #2C1620;
+      --tier-b: #E9B45E;
+      --tier-b-bg: #2A2214;
+      --good: #6FCFA3;
+      --good-bg: #12271F;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0C1322;
+    --surface: #141D33;
+    --sunken: #1B2540;
+    --ink: #E9EEF8;
+    --ink-2: #CBD6EA;
+    --muted: #93A3C2;
+    --faint: #6E7E9E;
+    --rule: #2A3654;
+    --rule-soft: #212C46;
+    --accent: #E8AC4A;
+    --accent-soft: #2A2213;
+    --tier-a: #F2879F;
+    --tier-a-bg: #2C1620;
+    --tier-b: #E9B45E;
+    --tier-b-bg: #2A2214;
+    --good: #6FCFA3;
+    --good-bg: #12271F;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--ground);
+    color: var(--ink-2);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.62;
+    margin: 0;
+    padding: 0 20px 80px;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; }
+
+  h1, h2, h3 {
+    font-family: Newsreader, "Iowan Old Style", Georgia, serif;
+    color: var(--ink);
+    font-weight: 600;
+    text-wrap: balance;
+    margin: 0;
+    line-height: 1.2;
+  }
+  h1 { font-size: clamp(2.1rem, 5vw, 3rem); letter-spacing: -.015em; }
+  h2 { font-size: clamp(1.5rem, 3vw, 1.95rem); letter-spacing: -.01em; }
+  h3 { font-size: 1.12rem; }
+  p { margin: 0; }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .72rem;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  /* ---- masthead ---- */
+  header.masthead {
+    padding: 56px 0 30px;
+    border-bottom: 2px solid var(--ink);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .lede { font-size: 1.06rem; color: var(--muted); max-width: 64ch; }
+
+  .figures {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+    gap: 0;
+    margin-top: 12px;
+    border-top: 1px solid var(--rule);
+  }
+  .fig {
+    padding: 14px 16px 12px 0;
+    border-right: 1px solid var(--rule-soft);
+  }
+  .fig:last-child { border-right: 0; }
+  .fig b {
+    display: block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 1.32rem;
+    font-weight: 500;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .fig span { font-size: .8rem; color: var(--faint); }
+
+  /* ---- contents ---- */
+  nav.toc {
+    margin: 26px 0 0;
+    padding: 18px 20px;
+    background: var(--sunken);
+    border: 1px solid var(--rule-soft);
+    border-radius: 3px;
+  }
+  nav.toc ol {
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 4px 26px;
+    counter-reset: toc;
+  }
+  nav.toc li { counter-increment: toc; }
+  nav.toc a {
+    color: var(--ink-2);
+    text-decoration: none;
+    font-size: .92rem;
+    display: flex;
+    gap: 9px;
+    padding: 3px 0;
+  }
+  nav.toc a::before {
+    content: counter(toc, decimal-leading-zero);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .76rem;
+    color: var(--faint);
+    padding-top: 2px;
+  }
+  nav.toc a:hover { color: var(--accent); }
+
+  section { margin-top: 56px; scroll-margin-top: 20px; }
+  section > h2 { padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+  .intro { margin-top: 16px; max-width: 68ch; color: var(--muted); }
+  .stack { display: flex; flex-direction: column; gap: 16px; margin-top: 22px; }
+
+  /* ---- pipeline ---- */
+  .pipe { display: grid; grid-template-columns: repeat(auto-fit, minmax(168px, 1fr)); gap: 12px; margin-top: 22px; }
+  .pipe .step {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--ink);
+    border-radius: 2px;
+    padding: 14px 15px;
+  }
+  .pipe .step .n {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .72rem;
+    color: var(--accent);
+    letter-spacing: .1em;
+  }
+  .pipe .step h3 { margin: 3px 0 6px; font-size: 1rem; }
+  .pipe .step p { font-size: .87rem; color: var(--muted); }
+
+  /* ---- detector entries ---- */
+  .det {
+    display: grid;
+    grid-template-columns: 82px 1fr;
+    gap: 0 20px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+  }
+  .det .rail { display: flex; flex-direction: column; gap: 7px; align-items: flex-start; }
+  .det .id {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 1.32rem;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .chip {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .66rem;
+    letter-spacing: .07em;
+    padding: 2px 7px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .chip.a { background: var(--tier-a-bg); color: var(--tier-a); }
+  .chip.b { background: var(--tier-b-bg); color: var(--tier-b); }
+  .fires {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .74rem;
+    color: var(--faint);
+    font-variant-numeric: tabular-nums;
+  }
+  .det h3 { margin-bottom: 8px; }
+  .det dl { margin: 0; display: flex; flex-direction: column; gap: 9px; }
+  .det dt {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .68rem;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 1px;
+  }
+  .det dd { margin: 0; font-size: .93rem; }
+  .det dd.benign { color: var(--muted); }
+  code {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .86em;
+    background: var(--sunken);
+    padding: 1px 5px;
+    border-radius: 2px;
+    color: var(--ink);
+  }
+
+  /* ---- generic panel ---- */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 18px 20px;
+  }
+  .panel h3 { margin-bottom: 7px; }
+  .panel p + p { margin-top: 9px; }
+  .panel .meta {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .78rem;
+    color: var(--faint);
+    margin-top: 10px;
+    padding-top: 9px;
+    border-top: 1px solid var(--rule-soft);
+    font-variant-numeric: tabular-nums;
+  }
+  .panel.flag { border-left: 3px solid var(--accent); background: var(--accent-soft); }
+  .panel.win { border-left: 3px solid var(--good); }
+  .panel.win .verdict { color: var(--good); font-weight: 600; }
+
+  /* ---- table ---- */
+  .scroll { overflow-x: auto; margin-top: 20px; border: 1px solid var(--rule); border-radius: 3px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: .89rem; }
+  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--rule-soft); }
+  th {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .68rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--faint);
+    background: var(--sunken);
+    font-weight: 500;
+  }
+  tr:last-child td { border-bottom: 0; }
+  td.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; text-align: right; }
+
+  /* ---- Q&A ---- */
+  .qa { display: flex; flex-direction: column; gap: 0; margin-top: 22px; border-top: 1px solid var(--rule); }
+  .qa .item { padding: 16px 0; border-bottom: 1px solid var(--rule-soft); }
+  .qa .q { font-weight: 600; color: var(--ink); font-size: 1rem; }
+  .qa .a { margin-top: 6px; color: var(--muted); font-size: .93rem; max-width: 74ch; }
+
+  footer { margin-top: 64px; padding-top: 20px; border-top: 2px solid var(--ink); color: var(--faint); font-size: .84rem; }
+
+  @media (max-width: 620px) {
+    .det { grid-template-columns: 1fr; gap: 12px; }
+    .det .rail { flex-direction: row; align-items: center; gap: 10px; }
+  }
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <div class="eyebrow">SIH26102 · MoSPI · Codebase field manual</div>
+  <h1>What PARAKH actually does</h1>
+  <p class="lede">Every detector, every validation method and every algorithm in the codebase, explained in plain language — with the real numbers each one produces, including the ones that came out badly.</p>
+  <div class="figures">
+    <div class="fig"><b>1,31,437</b><span>works in the corpus</span></div>
+    <div class="fig"><b>13</b><span>detectors, 2 tiers</span></div>
+    <div class="fig"><b>55,750</b><span>flags raised</span></div>
+    <div class="fig"><b>37,701</b><span>works carrying a flag</span></div>
+    <div class="fig"><b>172</b><span>automated tests</span></div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="eyebrow">Contents</div>
+  <ol>
+    <li><a href="#idea">The one-sentence idea</a></li>
+    <li><a href="#pipeline">How the pipeline runs</a></li>
+    <li><a href="#tiers">Why there are two tiers</a></li>
+    <li><a href="#tier-a">Tier A — the five integrity checks</a></li>
+    <li><a href="#tier-b">Tier B — the eight statistical checks</a></li>
+    <li><a href="#algos">The algorithms, in plain words</a></li>
+    <li><a href="#validation">The five validation methods</a></li>
+    <li><a href="#extras">The three things beyond the flag list</a></li>
+    <li><a href="#didnt">What we did not build</a></li>
+    <li><a href="#judges">Questions judges will ask</a></li>
+  </ol>
+</nav>
+
+<section id="idea">
+  <h2>The one-sentence idea</h2>
+  <p class="intro">MPLADS gives every Member of Parliament ₹5 crore a year for local works. The public data on those works exists, but sanctions, payments and completion status sit in separate spreadsheets that are never joined — so nobody can see the scheme whole.</p>
+  <div class="stack">
+    <div class="panel flag">
+      <h3>The trap in this problem statement</h3>
+      <p>The obvious build is a model that scores each MP and names the worst ones. That tool would be a defamation engine: it would publish accusations about named public figures from data that cannot support them. An MP with more sanctioned works collects more flags for that reason alone.</p>
+      <p>PARAKH is built the other way round. <strong>Flags attach to works, never to people.</strong> Every flag shows its evidence and a plausible innocent explanation side by side, and a human decides. The product ranks works and agencies; it never ranks members. That restraint is enforced by tests that fail the build, not promised in a slide.</p>
+    </div>
+  </div>
+</section>
+
+<section id="pipeline">
+  <h2>How the pipeline runs</h2>
+  <p class="intro">Everything is computed <em>in advance</em>, in a batch job. Nothing is calculated while a user waits, and no model runs at request time. This is why the whole thing works offline and gives the same answer twice.</p>
+  <div class="pipe">
+    <div class="step">
+      <div class="n">STAGE 1</div>
+      <h3>Ingest</h3>
+      <p>eSAKSHI CSV exports, downloaded by hand — no scraper. Polars cleans and joins them into Parquet files.</p>
+    </div>
+    <div class="step">
+      <div class="n">STAGE 2</div>
+      <h3>Detect</h3>
+      <p>All 13 detectors run over the cleaned data. Each returns rows of <code>work_id, detector, tier, evidence</code>. Results are written into DuckDB.</p>
+    </div>
+    <div class="step">
+      <div class="n">STAGE 3</div>
+      <h3>Serve</h3>
+      <p>FastAPI reads that database. Every endpoint is a <code>SELECT</code> — the API cannot compute a detector even if asked.</p>
+    </div>
+    <div class="step">
+      <div class="n">STAGE 4</div>
+      <h3>Review</h3>
+      <p>A Next.js queue. A reviewer reads the evidence, reads the innocent explanation, and closes the flag with a note.</p>
+    </div>
+  </div>
+  <div class="stack">
+    <div class="panel">
+      <h3>Why batch, and not a live model</h3>
+      <p>Three reasons, and a judge may push on this. <strong>Reproducibility:</strong> the same input always yields the same flags, so anyone can re-run the pipeline and get your exact numbers. <strong>Auditability:</strong> a flag you can reproduce is a flag you can contest — which matters when the subject is public money. <strong>Cost:</strong> no GPU, no per-query charge, no internet at run time.</p>
+      <p class="meta">Rebuild command: <code>python -m parakh.pipeline</code> → <code>python -m parakh.database</code> · takes seconds</p>
+    </div>
+  </div>
+</section>
+
+<section id="tiers">
+  <h2>Why there are two tiers</h2>
+  <p class="intro">The tier is the single most important idea in the project, and it is always visible next to every flag. It tells the reviewer how much the flag is worth.</p>
+  <div class="stack">
+    <div class="panel" style="border-left:3px solid var(--tier-a)">
+      <h3><span class="chip a">TIER A</span> &nbsp;The record contradicts itself</h3>
+      <p>Arithmetic or logic that a human can check by hand, on that one row, with no context at all. A payment larger than the sanction it belongs to. A completion date before the sanction date. The same work ID twice. You do not need statistics to agree these are wrong — you need a calculator.</p>
+    </div>
+    <div class="panel" style="border-left:3px solid var(--tier-b)">
+      <h3><span class="chip b">TIER B</span> &nbsp;The work stands out from its peers</h3>
+      <p>Statistical. This work costs far more than similar works in the same category and state, or has been open far longer than similar works take. <strong>Tier B is a reason to look, never a finding.</strong> A flyover in Mumbai and a borewell in Koraput are both "works" — an absolute outlier is meaningless, so every Tier B flag states its peer group and how many peers it had.</p>
+      <p><strong>The abstention rule:</strong> if a peer group has fewer than 30 members, the detector returns nothing rather than guessing. Saying "I don't know" is a feature — with 8 peers, an outlier is noise.</p>
+    </div>
+  </div>
+</section>
+
+<section id="tier-a">
+  <h2>Tier A — the five integrity checks</h2>
+  <p class="intro">Deterministic. Each either fires or doesn't. "Fires" below is the real count on the current corpus.</p>
+  <div class="stack">
+
+    <div class="det">
+      <div class="rail"><span class="id">A1</span><span class="chip a">TIER A</span><span class="fires">0 flags</span></div>
+      <div>
+        <h3>Ledger contradiction</h3>
+        <dl>
+          <div><dt>What it looks for</dt><dd>Three separate impossibilities: payments recorded against a work add up to more than the work was sanctioned for; a sanction amount that is zero or negative; or a completion date earlier than the sanction date.</dd></div>
+          <div><dt>How it works</dt><dd>Sum the payments per work, join to the sanction, compare. A tolerance of ₹1 is allowed — two "excess" cases in the real data turned out to be about 0.0000000001 rupees of floating-point rounding, not overspending.</dd></div>
+          <div><dt>Why it currently fires zero times</dt><dd class="benign">Genuinely no contradictions of this kind exist in this export. That is a real result, not a broken detector — and a good thing to say out loud rather than hide.</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="det">
+      <div class="rail"><span class="id">A2</span><span class="chip a">TIER A</span><span class="fires">39 flags</span></div>
+      <div>
+        <h3>Phantom completion</h3>
+        <dl>
+          <div><dt>What it looks for</dt><dd>A work marked "Work Completed" where almost nothing has actually been paid out — either zero rupees, or under 5% of the sanctioned amount.</dd></div>
+          <div><dt>How it works</dt><dd>Sum payments per work, keep only the completed ones, compare against the 5% threshold.</dd></div>
+          <div><dt>Innocent explanation shown alongside</dt><dd class="benign">The work may have drawn on state or local-body co-funding outside MPLADS, come in under budget, or have its final settlement queued for the next disbursement cycle.</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="det">
+      <div class="rail"><span class="id">A3</span><span class="chip a">TIER A</span><span class="fires">0 flags</span></div>
+      <div>
+        <h3>Duplicate record</h3>
+        <dl>
+          <div><dt>What it looks for</dt><dd>The exact same work ID appearing more than once in the source export.</dd></div>
+          <div><dt>The version we deleted</dt><dd>Originally this also flagged different IDs sharing description, location, agency and amount within 90 days. Tested on real data: it fired <strong>8,126 times</strong>, almost entirely on legitimate batch orders — one MP requesting the same standard item at many schools with one copy-pasted description. The largest genuine group was 118 identical high-mast lights from a single MP. We removed it rather than ship a detector that is wrong 8,000 times.</dd></div>
+          <div><dt>Why it currently fires zero times</dt><dd class="benign">The export has no repeated IDs. Also a real result.</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="det">
+      <div class="rail"><span class="id">A4</span><span class="chip a">TIER A</span><span class="fires">636 flags</span></div>
+      <div>
+        <h3>Orphan sanction</h3>
+        <dl>
+          <div><dt>What it looks for</dt><dd>Money was sanctioned, but the record has no implementing agency, no state, or no category — nobody is recorded as responsible for spending it.</dd></div>
+          <div><dt>How it works</dt><dd>A null check on those three fields, restricted to works that actually have a sanction amount.</dd></div>
+          <div><dt>Innocent explanation shown alongside</dt><dd class="benign">Usually a blank field at upload time or a column dropped during a system migration, rather than a work genuinely assigned to nobody.</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="det">
+      <div class="rail"><span class="id">A5</span><span class="chip a">TIER A</span><span class="fires">12,681 flags</span></div>
+      <div>
+        <h3>Unverified completion</h3>
+        <dl>
+          <div><dt>What it looks for</dt><dd>A work marked complete with no photograph on file.</dd></div>
+          <div><dt>The honest caveat</dt><dd>Only 23.8% of works in this corpus have photo evidence at all, so this fires often and is <em>weak</em> on its own. It is useful in combination with other flags, not as a standalone accusation — and the product says so.</dd></div>
+          <div><dt>Innocent explanation shown alongside</dt><dd class="benign">Older works predate the portal's image-upload requirement, or an upload simply failed at submission.</dd></div>
+        </dl>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="tier-b">
+  <h2>Tier B — the eight statistical checks</h2>
+  <p class="intro">All peer-relative. Every one states its peer group and <code>n</code> in the evidence sentence, and abstains below 30 peers.</p>
+  <div class="stack">
+
+    <div class="det">
+      <div class="rail"><span class="id">B1</span><span class="chip b">TIER B</span><span class="fires">9,144 flags</span></div>
+      <div>
+        <h3>Peer cost outlier</h3>
+        <dl>
+          <div><dt>What it looks for</dt><dd>This work cost far more (or far less) than similar works — same category, same state, same financial year.</dd></div>
+          <div><dt>How it works</dt><dd>A <strong>robust z-score</strong> above 3.5. See the algorithms section for what "robust" means and why the ordinary version fails here.</dd></div>
+          <div><dt>Innocent explanation shown alongside</dt><dd class="benign">Difficult terrain, urban land costs, or several works clubbed into one entry can all put real costs above the median.</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="det">
+      <div class="rail"><span class="id">B2</span><span class="chip b">TIER B</span><span class="fires">550 flags</span></div>
+      <div>
+        <h3>Cost-per-unit outlier</h3>
+        <dl>
+          <div><dt>What it looks for</dt><dd>Not total cost but <em>unit price</em> — rupees per metre of road, per streetlight, per litre of tanker capacity — against peers in the same category, unit and state.</dd></div>
+          <div><dt>The honest caveat</dt><dd>Only about 5% of works have a quantity we can extract at all, because MPLADS descriptions are location narratives ("from X's house to Y's house"), not specifications. Low coverage is reported, not hidden. The peer group deliberately drops financial year — coverage is already thin and adding it would push most groups below the n=30 floor.</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="det">
+      <div class="rail"><span class="id">B3</span><span class="chip b">TIER B</span><span class="fires">7,738 flags</span></div>
+      <div>
+        <h3>Stalled work</h3>
+        <dl>
+          <div><dt>What it looks for</dt><dd>A work still not finished, open longer than 95% of comparable works took to complete.</dd></div>
+          <div><dt>How it works</dt><dd>The threshold is <strong>learned from the data, never hard-coded</strong>. For each category × state, take every work that <em>did</em> finish, compute the 95th percentile of days-to-complete, then apply that number to the ones still open.</dd></div>
+          <div><dt>Innocent explanation shown alongside</dt><dd class="benign">Land-acquisition disputes, contractor litigation, monsoon delays, or an agency handover — administrative friction, not abandonment.</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="det">
+      <div class="rail"><span class="id">B4</span><span class="chip b">TIER B</span><span class="fires">6,304 flags</span></div>
+      <div>
+        <h3>Threshold bunching</h3>
+        <dl>
+          <div><dt>What it looks for</dt><dd>An agency whose sanctions cluster suspiciously just below a round-rupee approval tier — ₹4.9 lakh when ₹5 lakh needs a higher sign-off.</dd></div>
+          <div><dt>How it works</dt><dd>For seven round thresholds, count how many of an agency's sanctions land within 5% below each one, and compare that share against the national share in the same band. Flags when the agency's share is over 10% <em>and</em> more than 3× the national rate.</dd></div>
+          <div><dt>The version we deleted</dt><dd>The plan also called for a Benford's-law digit test per agency. Built, then removed — twice. Against the theoretical Benford curve it flagged <strong>all 333</strong> eligible agencies, because sanction amounts are policy-chosen round figures, not the organically-arising quantities Benford describes. Rebuilding it against the corpus's own digit pattern <em>still</em> flagged all 333, because agencies genuinely specialise in different work types with different price points. A detector that fires on everything says nothing.</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="det">
+      <div class="rail"><span class="id">B5</span><span class="chip b">TIER B</span><span class="fires">2,347 flags</span></div>
+      <div>
+        <h3>Work splitting</h3>
+        <dl>
+          <div><dt>What it looks for</dt><dd>One big job broken into several small ones to stay under an approval limit: three or more similarly-worded works, same agency and district, within 30 days, all comparable in size.</dd></div>
+          <div><dt>How it works</dt><dd>TF-IDF similarity above 0.85 links pairs; <strong>union-find</strong> merges those pairs into clusters. A cluster only counts if no single work exceeds half the cluster's total — that is what separates "split job" from "one real work plus small extras".</dd></div>
+          <div><dt>Innocent explanation shown alongside</dt><dd class="benign">An area-wide rollout — the same standard item installed at several sites as one coordinated programme.</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="det">
+      <div class="rail"><span class="id">B6</span><span class="chip b">TIER B</span><span class="fires">3,241 flags</span></div>
+      <div>
+        <h3>Agency concentration</h3>
+        <dl>
+          <div><dt>What it looks for</dt><dd>One agency handling an unusually large share of a single MP's total sanctioned value, compared with how concentrated other MPs' relationships normally are.</dd></div>
+          <div><dt>The bug real data exposed</dt><dd>First version flagged nothing at all. Reason: <strong>187 of 677 MPs route 100% of their value through one agency</strong> — because their constituency sits inside one district, which has exactly one agency. No choice was ever available. That pinned the 95th percentile at 1.0, so nothing could exceed it. Fix: only consider MPs who actually used 2+ agencies. A share is only meaningful when there was something to concentrate away from.</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="det">
+      <div class="rail"><span class="id">B7</span><span class="chip b">TIER B</span><span class="fires">3,436 flags</span></div>
+      <div>
+        <h3>Year-end bunching</h3>
+        <dl>
+          <div><dt>What it looks for</dt><dd>An MP with a disproportionate share of a year's sanctions crammed into the final 90 days of the financial year — the classic budget dump.</dd></div>
+          <div><dt>Two things we changed after seeing real data</dt><dd>The plan said "final 90 days of the term", but the 18th term has not ended, so that has no anchor. Financial-year-end does, and year-end fund-dumping is a recognised pattern in its own right. Second, the minimum was raised from 10 sanctions to 40: MPs submit in a few large batches, so at n=10 whether a batch lands in the window is nearly a coin flip — 7.7% of groups sat at exactly 100%, pinning the percentile at the ceiling again.</dd></div>
+          <div><dt>Innocent explanation shown alongside</dt><dd class="benign">Year-end surges track when state treasuries release funds and when utilisation targets are reported — a budget-cycle artefact common across all MPs.</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="det">
+      <div class="rail"><span class="id">B8</span><span class="chip b">TIER B</span><span class="fires">9,634 flags</span></div>
+      <div>
+        <h3>Near-duplicate funding</h3>
+        <dl>
+          <div><dt>What it looks for</dt><dd>Two different work IDs whose descriptions are 90%+ similar, in the same district, recommended within 180 days — possibly the same physical asset funded twice.</dd></div>
+          <div><dt>The clever bit</dt><dd>Matches at 99.9%+ similarity are <strong>excluded</strong>, not included. Near-verbatim text means a copy-pasted template for a legitimate bulk order. A genuine accidental double-entry, typed independently by two people, lands just <em>below</em> a perfect match. The signal is in the band, not at the top.</dd></div>
+          <div><dt>Why the 180-day window</dt><dd>Without it, same-district-and-similar-wording matched 13,162 pairs — about 20% of the corpus, implausible for double-funding. This one is a judgment call about a reasonable window, not a number derived from the data, and the code says so.</dd></div>
+        </dl>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="algos">
+  <h2>The algorithms, in plain words</h2>
+  <p class="intro">Six techniques carry the whole system. None of them is a black box, and that is deliberate.</p>
+  <div class="stack">
+
+    <div class="panel">
+      <h3>Robust z-score (median absolute deviation)</h3>
+      <p>An ordinary z-score asks "how many standard deviations from the mean?" — but the mean and standard deviation are themselves dragged around by the very outliers you are hunting. One ₹5 crore entry inflates the average so much that it stops looking unusual.</p>
+      <p>The robust version uses the <strong>median</strong> instead of the mean, and the <strong>median absolute deviation</strong> instead of the standard deviation. Both ignore extremes, so a genuine outlier cannot hide by distorting its own yardstick. The constant 0.6745 rescales it so the number is comparable to a normal z-score.</p>
+      <p><strong>The real-data problem, and the three-level fallback.</strong> MPLADS peer groups often have most works at one exact round figure — so the MAD is <em>zero</em>, and dividing by it breaks. Level 2 falls back to the interquartile range. When 75%+ share one value, even that is zero; level 3 then abstains unless the work is at least 2× away from the median. Before this fix, B1 flagged 3,172 works whose own evidence said "1.0× the peer median" while calling them extreme outliers.</p>
+      <p class="meta">Used by B1, B2 · <code>src/parakh/peer_stats.py</code></p>
+    </div>
+
+    <div class="panel">
+      <h3>TF-IDF + cosine similarity</h3>
+      <p>How do you tell a computer two descriptions mean the same thing? TF-IDF turns each description into a vector of word weights, where a word counts for more if it is rare across the corpus — "construction" is everywhere and counts little; "cremation" is rare and counts a lot. Cosine similarity then measures the angle between two vectors: 1.0 is identical, 0 is nothing in common.</p>
+      <p class="meta">Used by B5 (0.85 threshold), B8 (0.90 threshold) · <code>src/parakh/text_similarity.py</code></p>
+    </div>
+
+    <div class="panel">
+      <h3>Union-find (disjoint set)</h3>
+      <p>Similarity gives you <em>pairs</em>, but work-splitting is about <em>groups</em>. If A resembles B and B resembles C, all three belong in one cluster even if A and C were never directly compared. Union-find merges pairs into groups in near-constant time.</p>
+      <p class="meta">Used by B5 · <code>_UnionFind</code> in <code>tier_b.py</code></p>
+    </div>
+
+    <div class="panel">
+      <h3>Empirical percentiles (P95, P75)</h3>
+      <p>Rather than declaring "90 days is too slow", the code asks the data: of every comparable work that actually finished, how long did the slowest 5% take? That becomes the threshold. It adapts per category and state automatically — a borewell and a bridge get different clocks — and it is defensible, because it came from the domain rather than from us.</p>
+      <p class="meta">Used by B3 (P95) and the stall model's labels (P75)</p>
+    </div>
+
+    <div class="panel">
+      <h3>Louvain community detection</h3>
+      <p>Build a graph where MPs and agencies are dots and a shared work is a line between them. Louvain finds <strong>communities</strong> — clusters more densely connected inside than outside — by repeatedly moving nodes to whichever neighbouring group most improves the clustering, then collapsing each group into a single node and repeating.</p>
+      <p class="meta">Used by the network graph page · NetworkX · <code>src/parakh/graph.py</code></p>
+    </div>
+
+    <div class="panel">
+      <h3>LightGBM gradient boosting</h3>
+      <p>The one genuine machine-learning model, and it does a narrow job: predict which currently-normal-looking works are most likely to stall. Gradient boosting builds many small decision trees in sequence, each correcting the previous one's mistakes.</p>
+      <p>Its labels are careful. Works that finished get a real label. Works already past the P95 with no completion are labelled stalled. Works still inside the normal window are <strong>excluded from training</strong> — their outcome genuinely isn't known yet, and labelling them either way would be guessing.</p>
+      <p class="meta">Used by the at-risk page · <code>src/parakh/stall_model.py</code></p>
+    </div>
+
+  </div>
+</section>
+
+<section id="validation">
+  <h2>The five validation methods</h2>
+  <p class="intro">There is no labelled dataset of "known bad MPLADS works" to test against, so a single accuracy number is impossible. Five independent methods attack the problem from different angles — and three of them returned results that are unflattering. All five are published as they came out.</p>
+  <div class="stack">
+
+    <div class="panel win">
+      <h3>1 &nbsp;Synthetic injection — the one hard number</h3>
+      <p>Clone real works, deliberately corrupt them in known ways, mix them back in, and see how many the detectors catch. Each injected row keeps its real state, category and agency so it lands in a real peer group.</p>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Planted anomaly</th><th>Target</th><th class="num">n</th><th class="num">Target caught</th><th class="num">Any detector</th></tr></thead>
+          <tbody>
+            <tr><td>Duplicate record</td><td>A3</td><td class="num">40</td><td class="num">100%</td><td class="num">100%</td></tr>
+            <tr><td>Phantom completion</td><td>A2</td><td class="num">40</td><td class="num">100%</td><td class="num">100%</td></tr>
+            <tr><td>Agency concentration</td><td>B6</td><td class="num">20</td><td class="num">100%</td><td class="num">100%</td></tr>
+            <tr><td>Inflated cost</td><td>B1</td><td class="num">40</td><td class="num">77.5%</td><td class="num">82.5%</td></tr>
+            <tr><td>Split work</td><td>B5</td><td class="num">42</td><td class="num">57.1%</td><td class="num">92.9%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="meta">Three of five at perfect recall · B5's own recall is weak, but 92.9% of split works were caught by <em>some</em> detector</p>
+    </div>
+
+    <div class="panel">
+      <h3>2 &nbsp;Known-case backtest — <span style="color:var(--accent)">returned nothing, and we explain why</span></h3>
+      <p>Take MPLADS irregularities documented in CAG audits and press coverage, and check whether those works rank highly here. Two real cases were researched. <strong>Neither matched.</strong></p>
+      <p>The reason is structural, not a search failure. CAG compliance audits examine works that are years old and already executed — the audit itself takes years to publish. This corpus is the 18th term only: recommended and sanctioned in the last one to three years, largely still in progress. A match against a finalised CAG finding <em>should not exist yet</em>. The method becomes checkable when audits of 18th-term spending are published, and not before.</p>
+      <p class="meta">Case 1: Indoor Sports Hall, Andaman PWD (CAG Report 22 of 2025) — the audited agency does not appear in this corpus at all · Case 2: outside this term by construction</p>
+    </div>
+
+    <div class="panel">
+      <h3>3 &nbsp;Manual adjudication — <span style="color:var(--accent)">0 of 50 were irregular</span></h3>
+      <p>The top 50 flagged works were reviewed by hand and classified three ways. The result: <strong>0 plausibly irregular, 1 undecided, 49 explained as benign.</strong></p>
+      <p>Every one of the 50 belonged to one of eight batch-procurement clusters — streetlights, water tankers, library books, multi-gym sets. That is not a failure of the detectors; it is a finding about the <em>ranking</em>. A plain "most flags first" sort promotes large legitimate batches over rarer single-flag anomalies. Reporting the honest denominator is the point of the method.</p>
+      <p class="meta">Largest cluster: 47 near-identical 3,000-litre water tankers in Fazilka, Punjab (~₹2.40L each)</p>
+    </div>
+
+    <div class="panel">
+      <h3>4 &nbsp;Stability under resampling — <span style="color:var(--accent)">B7 is fragile, and we say so</span></h3>
+      <p>Re-draw the corpus at random with replacement, re-run each detector, and measure how much the flagged set overlaps the original (Jaccard overlap). A stable detector flags roughly the same works whichever sample it sees.</p>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Detector</th><th class="num">Baseline flags</th><th class="num">Mean overlap</th><th>Reading</th></tr></thead>
+          <tbody>
+            <tr><td>B4 Threshold bunching</td><td class="num">6,304</td><td class="num">0.589</td><td>At the practical ceiling</td></tr>
+            <tr><td>B3 Stalled work</td><td class="num">7,738</td><td class="num">0.561</td><td>Stable</td></tr>
+            <tr><td>B2 Cost-per-unit</td><td class="num">550</td><td class="num">0.542</td><td>Stable</td></tr>
+            <tr><td>B1 Peer cost outlier</td><td class="num">9,144</td><td class="num">0.523</td><td>Stable</td></tr>
+            <tr><td>B6 Agency concentration</td><td class="num">3,241</td><td class="num">0.361</td><td>Somewhat fragile</td></tr>
+            <tr><td>B7 Year-end bunching</td><td class="num">3,436</td><td class="num">0.056</td><td>Fragile — reported, not hidden</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Read the numbers against 0.632, not 1.0.</strong> A same-size bootstrap sample only ever contains about 63.2% of the original distinct rows, so even a perfect detector cannot score near 1.0. Knowing that ceiling is what makes 0.589 "excellent" rather than "barely more than half".</p>
+      <p class="meta">B5 and B8 are excluded: resampling duplicates rows verbatim, which a text-similarity detector would read as near-duplicates — an artefact of the method, not the detector. Tier A is excluded: nothing is fitted to the sample.</p>
+    </div>
+
+    <div class="panel win">
+      <h3>5 &nbsp;Stall model — time-split, never random</h3>
+      <p>The model is tested by training on earlier works and predicting later ones — a <strong>time split</strong>. A random split would let the model peek at works from the same period it is predicting, which flatters the score and would never happen in deployment.</p>
+      <p class="verdict">PR-AUC 0.572 against a base rate of 0.388 — the model does meaningfully better than guessing. ROC-AUC 0.706.</p>
+      <p class="meta">52,422 training works · 13,250 test works · calibration curve published on the validation page</p>
+    </div>
+
+  </div>
+</section>
+
+<section id="extras">
+  <h2>The three things beyond the flag list</h2>
+  <div class="stack">
+    <div class="panel">
+      <h3>Agency network graph</h3>
+      <p>Every MP–agency relationship as a graph, clustered into communities. Two real anomalies come out of it: <strong>thin-file agencies</strong> (very few works but disproportionate money) and <strong>19 agency names appearing under more than one state</strong> — most likely a data-entry inconsistency, but worth a look.</p>
+      <p>One planned signal was cut: "agencies reaching abnormally many constituencies". The top of that list was simply the big district administrations — Kannur, Kottayam, Palakkad, Bangalore Urban — which legitimately span several seats. Shipping it would have read as not understanding the domain.</p>
+    </div>
+    <div class="panel">
+      <h3>Constituency scorecard</h3>
+      <p>Framed explicitly as <em>district delivery performance</em>, not integrity. This is the one place the data comes closest to being about people, and the framing is deliberately narrow for exactly that reason.</p>
+    </div>
+    <div class="panel">
+      <h3>The grounded assistant</h3>
+      <p>An "Ask about this data" panel on every page. There is no language model behind it — a question either matches a fixed set of intents and is answered from rows read out of the database, or it is told what can be asked instead. It runs offline and cannot invent a figure.</p>
+      <p>One intent exists only to refuse: asked to rank members by flag count, it declines and explains why. A generative assistant would happily answer that question, which is precisely why there isn't one.</p>
+    </div>
+  </div>
+</section>
+
+<section id="didnt">
+  <h2>What we did not build</h2>
+  <div class="stack">
+    <div class="panel flag">
+      <p>The original plan had a third tier: an Isolation Forest, a Local Outlier Factor model, and a composite 0–100 "Review Priority Score" ranking every work on one number. <strong>None of it shipped. 13 of 16 planned detectors are built.</strong></p>
+      <p>This is stated on the product's own Methodology page, not only in a deck. A tool whose entire argument is restraint has to apply that restraint to its own claims first. Say this before a judge finds it — it is a strength, not an admission.</p>
+    </div>
+  </div>
+</section>
+
+<section id="judges">
+  <h2>Questions judges will ask</h2>
+  <div class="qa">
+    <div class="item">
+      <div class="q">"So can you tell me which MP is the most suspicious?"</div>
+      <div class="a">No — and that is the design, not a limitation. Flags attach to works. An MP with more sanctioned works collects more flags for that reason alone, so a count of flags measures activity, not conduct. The tool ranks works and agencies; it never ranks members. The assistant refuses this question in code, and a test in the build enforces it.</div>
+    </div>
+    <div class="item">
+      <div class="q">"Two of your detectors fire zero times. Are they broken?"</div>
+      <div class="a">No — A1 and A3 find no ledger contradictions and no repeated work IDs in this export. That is a real result about clean data. We report the true count of registered detectors rather than only the ones that happened to fire, because quietly dropping the zeroes would overstate what the corpus contains.</div>
+    </div>
+    <div class="item">
+      <div class="q">"Your manual review found 0 of 50 were actually irregular. Doesn't that mean it failed?"</div>
+      <div class="a">It means the <em>ranking</em> needs work, and we would rather report that than hide it. The detectors correctly identified unusual patterns; a plain "most flags first" sort then promoted large legitimate batches above rarer single-flag anomalies. Publishing the honest denominator is what makes the other four validation methods believable.</div>
+    </div>
+    <div class="item">
+      <div class="q">"Where is the AI? This looks like SQL."</div>
+      <div class="a">There is machine learning — LightGBM for stall prediction, TF-IDF and cosine similarity for text, Louvain for community detection, robust statistics throughout. But for money and public figures, the reviewer must be able to check the arithmetic by hand. A model that cannot explain itself cannot be contested, and an accusation nobody can contest is the failure mode this problem statement warns about.</div>
+    </div>
+    <div class="item">
+      <div class="q">"Why is one of your stability scores only 0.056?"</div>
+      <div class="a">B7, year-end bunching, is genuinely fragile at this peer-group size — its threshold sits close to where small sampling changes flip which MPs cross it. We publish it rather than quietly drop the detector or the metric. Note also that the ceiling is 0.632, not 1.0, because a bootstrap sample only contains about 63% of distinct rows.</div>
+    </div>
+    <div class="item">
+      <div class="q">"How do I know the numbers on your slides are real?"</div>
+      <div class="a">Clone the repository, run two commands, and the pipeline rebuilds every figure from the published source data. Same input, same flags, every time — there is no random seed or live model call anywhere in the detection path. 172 automated tests cover the detectors, the validation methods and the restraint rules themselves.</div>
+    </div>
+    <div class="item">
+      <div class="q">"What would you build next?"</div>
+      <div class="a">Fix the ranking that the manual adjudication exposed — cluster-aware ordering so one 47-tanker batch occupies one slot instead of fifteen. Then the retired Tier C, but only with a peer-group-controlled design, since the naive version flagged all 333 agencies. Both are already written down in the product, not invented for this answer.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Every figure on this page was read from the live corpus on the current build — 1,31,437 works from the eSAKSHI MPLADS export, 18th Lok Sabha and Rajya Sabha. Source: github.com/Kartik-Garg-13/mplad_sih
+</footer>
+
+</div>
