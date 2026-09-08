@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getMeta, getStats, getUnflagged } from "@/lib/api";
+import { pageParam } from "@/lib/params";
 import Pagination from "@/components/site/Pagination";
 
 function fmtInr(amount: number | null): string {
@@ -21,7 +22,7 @@ export default async function UnflaggedPage({
   searchParams: Promise<SearchParams>;
 }) {
   const sp = await searchParams;
-  const page = one(sp.page) ?? "1";
+  const page = pageParam(sp.page);
   const state = one(sp.state);
   const category = one(sp.category);
   const search = one(sp.search);

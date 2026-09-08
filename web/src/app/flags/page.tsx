@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { flagsExportCsvUrl, getDatasets, getFlags, getMeta, getStats } from "@/lib/api";
+import { pageParam } from "@/lib/params";
 import Pagination from "@/components/site/Pagination";
 
 function fmtInr(amount: number | null): string {
@@ -39,7 +40,7 @@ export default async function FlagsPage({
   searchParams: Promise<SearchParams>;
 }) {
   const sp = await searchParams;
-  const page = one(sp.page) ?? "1";
+  const page = pageParam(sp.page);
   const detector = one(sp.detector);
   const tier = one(sp.tier);
   const state = one(sp.state);

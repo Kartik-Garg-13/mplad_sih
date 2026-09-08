@@ -40,6 +40,14 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${displayFont.variable} h-full antialiased`}
     >
+      <head>
+        {/* Scroll reveals rest at opacity 0 and are turned on by script.
+            Without this, a reader with JavaScript off gets a blank landing
+            page and a blank dashboard rather than an unanimated one. */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}[data-parallax]{transform:none!important}`}</style>
+        </noscript>
+      </head>
       <body className="min-h-full flex flex-col">
         <SiteHeader />
         <div className="flex-1">{children}</div>
