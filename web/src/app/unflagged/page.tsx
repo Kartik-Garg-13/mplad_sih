@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getMeta, getStats, getUnflagged } from "@/lib/api";
+import Pagination from "@/components/site/Pagination";
 
 function fmtInr(amount: number | null): string {
   if (amount === null || amount === undefined) return "—";
@@ -159,28 +160,14 @@ export default async function UnflaggedPage({
         </table>
       </div>
 
-      <div className="mt-4 flex items-center justify-between text-sm text-ink-muted">
-        <div>
-          Page {res.page} of {res.total_pages.toLocaleString("en-IN")} &mdash;{" "}
-          {res.total.toLocaleString("en-IN")} works with no flags
-        </div>
-        <div className="flex gap-2">
-          <Link
-            href={buildHref({ page: String(Math.max(1, res.page - 1)) })}
-            className="rounded-md border border-border px-3 py-1 hover:border-slate-300 aria-disabled:pointer-events-none aria-disabled:opacity-40"
-            aria-disabled={res.page <= 1}
-          >
-            Previous
-          </Link>
-          <Link
-            href={buildHref({ page: String(res.page + 1) })}
-            className="rounded-md border border-border px-3 py-1 hover:border-slate-300 aria-disabled:pointer-events-none aria-disabled:opacity-40"
-            aria-disabled={res.page >= res.total_pages}
-          >
-            Next
-          </Link>
-        </div>
-      </div>
+      <Pagination
+        basePath="/unflagged"
+        params={{ state, category, search, source, include_unsanctioned: includeUnsanctioned }}
+        page={res.page}
+        totalPages={res.total_pages}
+        label="Works with no flags"
+        summary={`${res.total.toLocaleString("en-IN")} works with no flags`}
+      />
     </main>
   );
 }

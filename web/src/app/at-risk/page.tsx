@@ -1,6 +1,7 @@
 import Link from "next/link";
 import CalibrationChart from "@/components/CalibrationChart";
 import { getAtRisk, getStallModelMetrics } from "@/lib/api";
+import Pagination from "@/components/site/Pagination";
 
 function fmtInr(amount: number | null): string {
   if (amount === null || amount === undefined) return "—";
@@ -44,15 +45,6 @@ export default async function AtRiskPage({
   const topBinIdx = metrics.calibration_mean_predicted.length - 1;
   const topBinPredicted = metrics.calibration_mean_predicted[topBinIdx];
   const topBinActual = metrics.calibration_fraction_positive[topBinIdx];
-
-  const buildHref = (overrides: Record<string, string | undefined>) => {
-    const params = new URLSearchParams();
-    const merged = { search, page: "1", ...overrides };
-    for (const [k, v] of Object.entries(merged)) {
-      if (v) params.set(k, v);
-    }
-    return `/at-risk?${params.toString()}`;
-  };
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-8">
@@ -192,19 +184,14 @@ export default async function AtRiskPage({
         </table>
       </div>
 
-      <div className="mt-4 flex items-center justify-between text-sm text-ink-muted">
-        <div>
-          Page {atRisk.page} of {atRisk.total_pages.toLocaleString("en-IN")} &mdash; {atRisk.total.toLocaleString("en-IN")} works
-        </div>
-        <div className="flex gap-2">
-          <Link href={buildHref({ page: String(Math.max(1, atRisk.page - 1)) })} className="rounded-md border border-border px-3 py-1 hover:border-border">
-            Previous
-          </Link>
-          <Link href={buildHref({ page: String(atRisk.page + 1) })} className="rounded-md border border-border px-3 py-1 hover:border-border">
-            Next
-          </Link>
-        </div>
-      </div>
+      <Pagination
+        basePath="/at-risk"
+        params={{ search }}
+        page={atRisk.page}
+        totalPages={atRisk.total_pages}
+        label="At-risk works"
+        summary={`${atRisk.total.toLocaleString("en-IN")} works`}
+      />
     </main>
   );
 }

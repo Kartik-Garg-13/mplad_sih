@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAgencies } from "@/lib/api";
+import Pagination from "@/components/site/Pagination";
 
 function fmtInr(amount: number | null): string {
   if (amount === null || amount === undefined) return "—";
@@ -160,26 +161,14 @@ export default async function AgenciesPage({
         </table>
       </div>
 
-      <div className="mt-4 flex items-center justify-between text-sm text-ink-muted">
-        <div>
-          Page {agencies.page} of {agencies.total_pages.toLocaleString("en-IN")} &mdash;{" "}
-          {agencies.total.toLocaleString("en-IN")} agencies
-        </div>
-        <div className="flex gap-2">
-          <Link
-            href={buildHref({ page: String(Math.max(1, agencies.page - 1)) })}
-            className="rounded-md border border-border px-3 py-1 hover:border-border"
-          >
-            Previous
-          </Link>
-          <Link
-            href={buildHref({ page: String(agencies.page + 1) })}
-            className="rounded-md border border-border px-3 py-1 hover:border-border"
-          >
-            Next
-          </Link>
-        </div>
-      </div>
+      <Pagination
+        basePath="/agencies"
+        params={{ thin_file: thinFile, cross_state: crossState, search, sort }}
+        page={agencies.page}
+        totalPages={agencies.total_pages}
+        label="Agencies"
+        summary={`${agencies.total.toLocaleString("en-IN")} agencies`}
+      />
     </main>
   );
 }

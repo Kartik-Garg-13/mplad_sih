@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { flagsExportCsvUrl, getDatasets, getFlags, getMeta, getStats } from "@/lib/api";
+import Pagination from "@/components/site/Pagination";
 
 function fmtInr(amount: number | null): string {
   if (amount === null || amount === undefined) return "—";
@@ -246,28 +247,14 @@ export default async function FlagsPage({
         </table>
       </div>
 
-      <div className="mt-4 flex items-center justify-between text-sm text-slate-500">
-        <div>
-          Page {flagsRes.page} of {flagsRes.total_pages.toLocaleString("en-IN")} &mdash;{" "}
-          {flagsRes.total.toLocaleString("en-IN")} flagged works
-        </div>
-        <div className="flex gap-2">
-          <Link
-            href={buildHref({ page: String(Math.max(1, flagsRes.page - 1)) })}
-            className="rounded-md border border-slate-200 px-3 py-1 hover:border-slate-300 aria-disabled:pointer-events-none aria-disabled:opacity-40"
-            aria-disabled={flagsRes.page <= 1}
-          >
-            Previous
-          </Link>
-          <Link
-            href={buildHref({ page: String(flagsRes.page + 1) })}
-            className="rounded-md border border-slate-200 px-3 py-1 hover:border-slate-300 aria-disabled:pointer-events-none aria-disabled:opacity-40"
-            aria-disabled={flagsRes.page >= flagsRes.total_pages}
-          >
-            Next
-          </Link>
-        </div>
-      </div>
+      <Pagination
+        basePath="/flags"
+        params={{ detector, tier, state, category, search, source, include_reviewed: includeReviewed }}
+        page={flagsRes.page}
+        totalPages={flagsRes.total_pages}
+        label="Flagged works"
+        summary={`${flagsRes.total.toLocaleString("en-IN")} flagged works`}
+      />
     </main>
   );
 }

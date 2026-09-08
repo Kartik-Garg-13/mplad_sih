@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getConstituencies } from "@/lib/api";
+import Pagination from "@/components/site/Pagination";
 
 function fmtInr(amount: number | null): string {
   if (amount === null || amount === undefined) return "—";
@@ -146,20 +147,14 @@ export default async function ConstituenciesPage({
         </table>
       </div>
 
-      <div className="mt-4 flex items-center justify-between text-sm text-ink-muted">
-        <div>
-          Page {constituencies.page} of {constituencies.total_pages.toLocaleString("en-IN")} &mdash;{" "}
-          {constituencies.total.toLocaleString("en-IN")} constituencies
-        </div>
-        <div className="flex gap-2">
-          <Link href={buildHref({ page: String(Math.max(1, constituencies.page - 1)) })} className="rounded-md border border-border px-3 py-1 hover:border-border">
-            Previous
-          </Link>
-          <Link href={buildHref({ page: String(constituencies.page + 1) })} className="rounded-md border border-border px-3 py-1 hover:border-border">
-            Next
-          </Link>
-        </div>
-      </div>
+      <Pagination
+        basePath="/constituencies"
+        params={{ search, sort, direction }}
+        page={constituencies.page}
+        totalPages={constituencies.total_pages}
+        label="Constituencies"
+        summary={`${constituencies.total.toLocaleString("en-IN")} constituencies`}
+      />
     </main>
   );
 }
