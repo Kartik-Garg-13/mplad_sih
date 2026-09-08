@@ -31,12 +31,31 @@ DEFAULT_MIN_PEER_GROUP = 30
 # than it is.
 _DEGENERATE_FLOOR_RATIO = 2.0
 
+# No cost within this fraction of its peer median is reported as a cost
+# outlier, however many robust sigma the spread estimate makes it.
+#
+# Confirmed against the real corpus: MPLADS peer groups cluster so hard on
+# round figures that the spread estimate can collapse to a few hundred
+# rupees, and an ordinary sanction then scores as an extreme outlier — a
+# Rs 4.5L work against a Rs 5.0L median came out at -17.5 sigma across 479
+# peers. Worse, the flag said so in an evidence sentence reading "is 1.0x
+# the peer median", which is the tool contradicting itself in the one
+# sentence a reviewer is asked to trust. 73 live flags read exactly that
+# way before this floor existed.
+#
+# Statistical significance in a near-degenerate distribution is not
+# material significance, and a Tier B flag has to be worth a human's time.
+# The module already accepted that principle for the fully-degenerate case
+# below; this extends it to the branches that had no floor at all.
+MIN_RELATIVE_DEVIATION = 0.10
+
 
 def add_robust_z(
     df: pl.DataFrame,
     value_col: str,
     group_cols: list[str],
     min_n: int = DEFAULT_MIN_PEER_GROUP,
+    min_relative_deviation: float = MIN_RELATIVE_DEVIATION,
 ) -> pl.DataFrame:
     """Add peer_n, peer_median, peer_mad, robust_z for `value_col` within
     each `group_cols` group.
@@ -69,6 +88,11 @@ def add_robust_z(
        median (either direction) — small deviations abstain (null)
        rather than being reported as an extreme statistical outlier
        they are not.
+
+    Over all three, `min_relative_deviation` is a final materiality
+    gate: a value within that fraction of its peer median abstains no
+    matter which estimate scored it, or how many sigma it scored. See
+    MIN_RELATIVE_DEVIATION above for why.
     """
     with_stats = df.with_columns(
         pl.col(value_col).median().over(group_cols).alias("peer_median"),
@@ -89,7 +113,7 @@ def add_robust_z(
         ratio_from_median <= 1 / _DEGENERATE_FLOOR_RATIO
     )
 
-    return with_mad.with_columns(
+    scored = with_mad.with_columns(
         pl.when(pl.col("peer_n") < min_n)
         .then(None)
         .when(pl.col("peer_mad") > 0)
@@ -102,4 +126,16 @@ def add_robust_z(
         .then(999.0)
         .otherwise(None)
         .alias("robust_z")
+    )
+
+    # The materiality floor, applied last so it gates every branch above.
+    # A zero peer median is left alone: there is no relative deviation to
+    # measure against, and any non-zero value there is already unbounded.
+    within_floor = (
+        (pl.col("peer_median") != 0)
+        & ((pl.col(value_col) - pl.col("peer_median")).abs()
+           < min_relative_deviation * pl.col("peer_median").abs())
+    )
+    return scored.with_columns(
+        pl.when(within_floor).then(None).otherwise(pl.col("robust_z")).alias("robust_z")
     ).drop("_peer_q75", "_peer_q25", "_peer_iqr")

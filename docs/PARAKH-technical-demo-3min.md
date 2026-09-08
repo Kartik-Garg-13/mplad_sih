@@ -44,7 +44,7 @@ Let me walk the actual flow.
 *Tab 2, `/flags`. Point at the tier letters in the first column, then the
 detector chips along the top.*
 
-This is the queue. **37,701 works** carry at least one flag.
+This is the queue. **37,566 works** carry at least one flag.
 
 Every row shows its **tier before anything else** — A means the record
 contradicts itself arithmetically, B means it stands out from its peer group.
@@ -93,7 +93,7 @@ and the decision is reversible.
 
 *Tab 5, `/unflagged`.*
 
-The queue has another side: **60,339 works** every detector examined and
+The queue has another side: **60,474 works** every detector examined and
 cleared. We separate those from works that were never evaluated, because
 "passed inspection" and "never inspected" are not the same claim.
 

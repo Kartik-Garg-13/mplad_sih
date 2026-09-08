@@ -69,7 +69,7 @@ scraper. `src/parakh/config.py` lists the exact filenames expected.
 ## Tests
 
 ```bash
-pytest                    # 172 tests, ~23s
+pytest                    # 175 tests, ~28s
 npm --prefix web run lint # must be clean
 npm --prefix web run build
 ```
@@ -95,7 +95,7 @@ web/src/app/         Next.js App Router pages
 data/raw/            eSAKSHI exports as downloaded
 data/processed/      built parquet + parakh.duckdb + overrides.sqlite
 docs/                presenter brief, demo script
-tests/               172 tests
+tests/               175 tests
 ```
 
 ## The assistant

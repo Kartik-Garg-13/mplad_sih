@@ -38,14 +38,14 @@ TIER_B_BG, TIER_B_INK = "FFFBEB", "B45309"
 
 PROJECT_FACTS = {
     "works": "1,31,437",
-    "flagged": "37,701",
-    "flags": "55,750",
-    "clean": "60,339",
+    "flagged": "37,566",
+    "flags": "55,546",
+    "clean": "60,474",
     "payments": "1,09,006",
     "agencies": "769",
     "mps": "733",
     "states": "36",
-    "tests": "172",
+    "tests": "175",
 }
 
 _id = [4000]
@@ -395,13 +395,23 @@ def slide6() -> str:
     return out
 
 
+# The team's own registration details. These live here, not only in the
+# built .pptx, because re-running this script regenerates slide 1 from the
+# blank template — anything typed into the deck by hand is overwritten.
+TEAM_NAME = "DOOM"
+TEAM_ID = "415"
+THEME = (
+    "Development of an AI powered system to detect anomalies, fraud, and "
+    "inefficiencies in MPLAD Scheme implementation regd."
+)
+
 TITLE_LINES = [
-    ("Problem Statement ID – SIH26102", True),
-    ("Problem Statement Title – Fraud & Anomaly Detection in MPLADS Scheme", True),
-    ("Theme – <<fill from the SIH portal>>", False),
-    ("PS Category – Software", True),
-    ("Team ID – <<fill from the SIH portal>>", False),
-    ("Team Name – <<registered team name>>", False),
+    f"Problem Statement ID – SIH26102",
+    f"Problem Statement Title – Fraud & Anomaly Detection in MPLADS Scheme",
+    f"Theme – {THEME}",
+    f"PS Category – Software",
+    f"Team ID – {TEAM_ID}",
+    f"Team Name – {TEAM_NAME}",
 ]
 
 
@@ -414,12 +424,11 @@ def slide1_body() -> str:
         run("Anomaly flagging for MPLADS implementation records", 1200, MUTED),
         space_before=300,
     )
-    for text, filled in TITLE_LINES:
-        paras += para(
-            run(text, 1400, SLATE if filled else AMBER, bold=True),
-            bullet=True,
-            space_before=900,
-        )
+    for text in TITLE_LINES:
+        # The theme is a full sentence, not a label — it needs a smaller
+        # size to sit on two lines instead of three.
+        size = 1200 if text.startswith("Theme") else 1400
+        paras += para(run(text, size, SLATE, bold=True), bullet=True, space_before=800)
     return paras
 
 
@@ -476,6 +485,9 @@ def main(template: str, output: str) -> None:
 
         if n == 1:
             xml = replace_paragraphs(xml, body_shape_name(xml), slide1_body())
+            # The template's placeholder subtitle carries the team name on
+            # the title slide.
+            xml = set_text(xml, "TITLE PAGE", TEAM_NAME)
         else:
             name = body_shape_name(xml)
             xml = drop_shape(xml, name)

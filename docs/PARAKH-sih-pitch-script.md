@@ -75,7 +75,7 @@ than guess.**
 
 Is it feasible? It is already running, end to end, on the full public corpus.
 Batch and deterministic — no GPU, no per-query cost, no internet at run time.
-Entirely open source. A hundred and seventy-two automated tests.
+Entirely open source. A hundred and seventy-five automated tests.
 
 The risks, and how we handle each one. Naming individuals would defame — so
 ranking members is **refused in code**, not by policy. Source fields are sparse
@@ -101,8 +101,8 @@ finally joined. *And for implementing agencies, a chance to explain an ordinary
 pattern before anything escalates.*
 
 Before PARAKH: oversight by small sample, years late, surfacing as allegations
-about people. After: one corpus, **37,701 works flagged with evidence
-attached**, and **60,339 examined by every detector and cleared.**
+about people. After: one corpus, **37,566 works flagged with evidence
+attached**, and **60,474 examined by every detector and cleared.**
 
 ---
 

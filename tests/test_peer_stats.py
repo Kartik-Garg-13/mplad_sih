@@ -110,3 +110,44 @@ def test_multi_column_grouping():
     light_median = out.filter(pl.col("cat") == "Light")["peer_median"].unique().to_list()
     assert road_median == [100.0]
     assert light_median == [5.0]
+
+
+def test_a_value_close_to_its_peer_median_abstains_however_tight_the_group():
+    """The materiality floor (plan §08 rule 2 — a flag has to be evidence).
+
+    A peer group clustered on one round figure collapses the spread
+    estimate, and an ordinary value then scores as an extreme outlier. On
+    the real corpus this produced 73 flags whose own evidence sentence
+    read "is 1.0x the peer median" while calling the work an outlier —
+    the tool contradicting itself in the sentence a reviewer must trust.
+    """
+    # 40 peers on an exact round figure, plus two at 4% either side: a
+    # near-zero spread estimate, but no material difference in rupees.
+    rows = _uniform_group("A", 40, 500_000.0) + [
+        {"grp": "A", "v": 520_000.0},
+        {"grp": "A", "v": 480_000.0},
+    ]
+    out = add_robust_z(pl.DataFrame(rows), "v", ["grp"], min_n=30)
+
+    for value in (520_000.0, 480_000.0):
+        z = out.filter(pl.col("v") == value)["robust_z"][0]
+        assert z is None, f"{value} is within 10% of the median and must abstain, got z={z}"
+
+
+def test_the_floor_does_not_suppress_a_genuine_outlier():
+    rows = _uniform_group("A", 40, 500_000.0) + [{"grp": "A", "v": 5_000_000.0}]
+    out = add_robust_z(pl.DataFrame(rows), "v", ["grp"], min_n=30)
+    z = out.filter(pl.col("v") == 5_000_000.0)["robust_z"][0]
+    assert z is not None and abs(z) > 3.5
+
+
+def test_the_floor_is_relative_not_absolute():
+    """10% of a small median is a small number of rupees, and 10% of a
+    large one is a large number — the gate has to scale with the group."""
+    small = _uniform_group("S", 40, 1_000.0) + [{"grp": "S", "v": 1_050.0}]
+    out = add_robust_z(pl.DataFrame(small), "v", ["grp"], min_n=30)
+    assert out.filter(pl.col("v") == 1_050.0)["robust_z"][0] is None
+
+    large = _uniform_group("L", 40, 10_000_000.0) + [{"grp": "L", "v": 10_500_000.0}]
+    out = add_robust_z(pl.DataFrame(large), "v", ["grp"], min_n=30)
+    assert out.filter(pl.col("v") == 10_500_000.0)["robust_z"][0] is None
